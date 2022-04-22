@@ -1,0 +1,23 @@
+services:
+    codebuds_sylius_fcm_plugin.service.messaging:
+        class: CodeBuds\SyliusFCMPlugin\Service\FirebaseMessaging
+        public: true
+        autowire: false
+        arguments:
+            $messaging: '@Kreait\Firebase\Messaging'
+            $manager: '@doctrine.orm.default_entity_manager'
+            $logger: '@monolog.logger'
+
+    codebuds_sylius_fcm_plugin.service.fcm_token:
+        class: CodeBuds\SyliusFCMPlugin\Service\FCMTokenService
+        public: true
+        autowire: false
+        arguments:
+          [ '@security.helper' ]
+
+    codebuds_sylius_fcm_plugin.service.fcm_topic:
+        class: CodeBuds\SyliusFCMPlugin\Service\FCMTopicService
+        public: true
+        autowire: false
+        arguments:
+          [ '@codebuds_sylius_fcm_plugin.service.fcm_token', '@doctrine.orm.entity_manager', '@codebuds_sylius_fcm_plugin.repository.topic_subscription', '@validator', '@Kreait\Firebase\Messaging' ]

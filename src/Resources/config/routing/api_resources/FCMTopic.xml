@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+
+<resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="https://api-platform.com/schema/metadata"
+           xsi:schemaLocation="https://api-platform.com/schema/metadata https://api-platform.com/schema/metadata/metadata-2.0.xsd"
+>
+    <resource class="%codebuds_sylius_fcm_plugin.model.fcm_entity_topic.class%" shortName="Topic">
+        <attribute name="validation_groups">codebuds</attribute>
+
+        <collectionOperations>
+            <collectionOperation name="shop_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/admin/topics</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">admin:topic:product:read</attribute>
+                    <attribute name="groups">admin:topic:read</attribute>
+                </attribute>
+            </collectionOperation>
+            <collectionOperation name="shop_post">
+                <attribute name="method">POST</attribute>
+                <attribute name="path">/shop/topic-subscriptions</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">shop:topic-subscription:read</attribute>
+                </attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">shop:topic-subscription-input:create</attribute>
+                </attribute>
+                <attribute name="controller">CodeBuds\SyliusFCMPlugin\Controller\CreateTopicSubscription</attribute>
+                <attribute name="input">CodeBuds\SyliusFCMPlugin\Dto\TopicInput</attribute>
+                <!-- The validation is done for each of the users tokens in the event listener not for the returned topic subscription -->
+                <attribute name="validate">false</attribute>
+                <!-- Persistance is done in the event listener for all the users tokens -->
+                <attribute name="write">false</attribute>
+            </collectionOperation>
+        </collectionOperations>
+        <itemOperations>
+            <itemOperation name="unsubscribe">
+                <attribute name="method">POST</attribute>
+                <attribute name="path">/shop/topics/{id}/unsubscribe</attribute>
+                <attribute name="controller">CodeBuds\SyliusFCMPlugin\Controller\UnsubscribeFromTopic</attribute>
+                <attribute name="requirements">
+                    <attribute name="id">\d+</attribute>
+                </attribute>
+                <!-- The validation is done for each of the users tokens in the event listener not for the returned topic subscription -->
+                <attribute name="validate">false</attribute>
+                <!-- Persistance is done in the event listener for all the users tokens -->
+                <attribute name="write">false</attribute>
+            </itemOperation>
+            <itemOperation name="subscribe">
+                <attribute name="method">POST</attribute>
+                <attribute name="path">/shop/topics/{id}/subscribe</attribute>
+                <attribute name="controller">CodeBuds\SyliusFCMPlugin\Controller\SubscribeToTopic</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">none</attribute>
+                </attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">shop:topic-subscription-input:create</attribute>
+                </attribute>
+                <attribute name="requirements">
+                    <attribute name="id">\d+</attribute>
+                </attribute>
+                <!-- The validation is done for each of the users tokens in the event listener not for the returned topic subscription -->
+                <attribute name="validate">false</attribute>
+                <!-- Persistance is done in the event listener for all the users tokens -->
+                <attribute name="write">false</attribute>
+            </itemOperation>
+            <itemOperation name="toggle">
+                <attribute name="method">POST</attribute>
+                <attribute name="path">/shop/topics/{id}/toggle</attribute>
+                <attribute name="controller">CodeBuds\SyliusFCMPlugin\Controller\ToggleTopicSubscription</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">shop:topic-subscription:toggle</attribute>
+                </attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">none</attribute>
+                </attribute>
+                <attribute name="requirements">
+                    <attribute name="id">\d+</attribute>
+                </attribute>
+            </itemOperation>
+        </itemOperations>
+
+        <property name="id" identifier="true" writable="false"/>
+        <property name="topic" writable="true"/>
+        <property name="token" writable="false"/>
+        <property name="product" writable="true"/>
+    </resource>
+</resources>

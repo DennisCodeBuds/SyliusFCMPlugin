@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Xdebug" type="PhpWebAppRunConfigurationType" factoryName="PHP Web Application" server_name="Xdebug" start_url="http://sanolib-back.localhost">
+    <method v="2" />
+  </configuration>
+</component>

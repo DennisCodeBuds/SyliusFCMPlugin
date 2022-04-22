@@ -1,0 +1,8 @@
+sylius_resource:
+    resources:
+        codebuds_sylius_fcm_plugin.topic_subscription:
+            driver: doctrine/orm
+            classes:
+                model: CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription
+                interface: CodeBuds\SyliusFCMPlugin\Entity\TopicSubscriptionInterface
+                repository: CodeBuds\SyliusFCMPlugin\Repository\TopicSubscriptionRepository

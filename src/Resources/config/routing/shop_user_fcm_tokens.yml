@@ -1,0 +1,12 @@
+codebuds_sylius_fcm_plugin_admin_shop_user_tokens:
+    resource: |
+        alias: codebuds_sylius_fcm_plugin.shop_user_fcm_token
+        section: admin
+        templates: "@SyliusAdmin\\Crud"
+        redirect: update
+        permission: true
+        grid: codebuds_sylius_fcm_plugin_admin_shop_user_tokens
+        vars:
+            all:
+                subheader: codebuds_sylius_fcm_plugin.ui.token
+    type: sylius.resource

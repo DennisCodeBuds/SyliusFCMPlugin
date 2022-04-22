@@ -1,0 +1,4 @@
+services:
+    codebuds_sylius_fcm_plugin.repository.entity_fcm_topic:
+        class: CodeBuds\SyliusFCMPlugin\Repository\EntityTopicRepository
+        arguments: ["@doctrine.orm.entity_manager"]

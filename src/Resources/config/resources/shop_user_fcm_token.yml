@@ -1,0 +1,7 @@
+sylius_resource:
+    resources:
+        codebuds_sylius_fcm_plugin.shop_user_fcm_token:
+            driver: doctrine/orm
+            classes:
+                model: CodeBuds\SyliusFCMPlugin\Entity\ShopUserFCMToken
+                interface: CodeBuds\SyliusFCMPlugin\Entity\FCMTokenOwnerInterface

@@ -1,0 +1,28 @@
+imports:
+    - { resource: resources.yml }
+    - { resource: grids.yml }
+    - { resource: services.yml }
+    - { resource: events.yml }
+    - { resource: data_transformer.yml }
+    - { resource: services/repository.yml }
+    - { resource: commands.xml }
+
+parameters:
+    codebuds_validation_group: [ codebuds ]
+    codebuds_sylius_fcm_plugin.form.type.shop_user_fcm_notification.validation_groups: "%codebuds_validation_group%"
+
+framework:
+    serializer:
+        mapping:
+            paths: [ '%kernel.project_dir%/vendor/codebuds/sylius-fcm-plugin/src/Resources/config/serialization' ]
+
+api_platform:
+    mapping:
+        paths:
+            - '%kernel.project_dir%/vendor/codebuds/sylius-fcm-plugin/src/Resources/config/routing/api_resources'
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface: CodeBuds\SyliusFCMPlugin\Entity\FCMToken
+            CodeBuds\SyliusFCMPlugin\Entity\FCMTopicInterface: CodeBuds\SyliusFCMPlugin\Entity\FCMEntityTopic

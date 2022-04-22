@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+
+<resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="https://api-platform.com/schema/metadata"
+           xsi:schemaLocation="https://api-platform.com/schema/metadata https://api-platform.com/schema/metadata/metadata-2.0.xsd"
+>
+    <resource class="%codebuds_sylius_fcm_plugin.model.product_fcm_topic.class%" shortName="ProductFCMTopic">
+        <attribute name="validation_groups">codebuds</attribute>
+
+        <collectionOperations>
+            <collectionOperation name="shop_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/admin/topic/product</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">admin:topic:product:read</attribute>
+                </attribute>
+            </collectionOperation>
+
+            <collectionOperation name="shop_post">
+                <attribute name="method">POST</attribute>
+                <attribute name="path">/shop/topic/product</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">shop:topic:product:read</attribute>
+                </attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">shop:topic:product:create</attribute>
+                </attribute>
+            </collectionOperation>
+        </collectionOperations>
+        <itemOperations>
+            <itemOperation name="admin_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/shop/topic/product/{id}</attribute>
+            </itemOperation>
+        </itemOperations>
+
+        <property name="id" identifier="true" writable="false"/>
+        <property name="topic" writable="true"/>
+        <property name="token" writable="false"/>
+        <property name="product" writable="true"/>
+    </resource>
+</resources>

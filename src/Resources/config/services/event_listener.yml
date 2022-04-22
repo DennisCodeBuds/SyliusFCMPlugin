@@ -1,0 +1,5 @@
+services:
+    codebuds_sylius_fcm_plugin.menu.notifications:
+        class: CodeBuds\SyliusFCMPlugin\Menu\NotificationsMenuBuilder
+        tags:
+            - { name: kernel.event_listener, event: sylius.menu.admin.main, method: buildMenu }

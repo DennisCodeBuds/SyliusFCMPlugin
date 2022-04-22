@@ -1,0 +1,21 @@
+sylius_grid:
+    grids:
+        codebuds_sylius_fcm_plugin_admin_fcm_configuration:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%codebuds_sylius_fcm_plugin.model.fcm_configuration.class%"
+            fields:
+                value:
+                    type: string
+                    label: sylius.ui.title
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    delete:
+                        type: delete
+                    update:
+                        type: update
+                

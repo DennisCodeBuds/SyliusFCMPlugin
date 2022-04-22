@@ -1,0 +1,38 @@
+{% form_theme form '@SyliusUi/Form/theme.html.twig' %}
+
+<div class="codebuds-fcm-import" data-cb-fcm-wrapper data-cb-target="fcm-import">
+    {{ form_start(form, {'attr': {
+        'id': 'credentialsUploadForm', 'action': path('codebuds_sylius_fcm_plugin_admin_configuration_upload')
+    }}) }}
+
+
+    {% if credentialsInformation %}
+        <blockquote>
+            {{ "codebuds_sylius_fcm_plugin.ui.file_exists"|trans({'%filepath%': credentialsInformation.filename, '%updated_on%': credentialsInformation.modified|date('d/m/Y')}) }}
+        </blockquote>
+    {% endif %}
+    <div class="ui action input">
+        <input type="text" placeholder="{{ 'codebuds_sylius_fcm_plugin.ui.credentials_file'|trans }}"
+               data-cb-fcm-text="text" readonly>
+
+        {{ form_widget(form.file, { 'attr': {'data-cb-fcm-file': 'file'} }) }}
+        <button class="ui teal left labeled icon button" type="button"
+                id="credentialsUploadSubmit"
+        >
+            <i class="upload icon"></i>
+            {{ 'codebuds_sylius_fcm_plugin.ui.import.button'|trans }}
+        </button>
+    </div>
+    <br>
+    {{ form_errors(form.file) }}
+    {{ form_errors(form) }}
+    {% if form.file.vars.help %}
+        <div class="ui label pointing above">
+            <p class="help-text">
+                {{ form.file.vars.help }}
+            </p>
+        </div>
+    {% endif %}
+    {{ form_widget(form._token) }}
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+
+<resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="https://api-platform.com/schema/metadata"
+           xsi:schemaLocation="https://api-platform.com/schema/metadata https://api-platform.com/schema/metadata/metadata-2.0.xsd"
+>
+    <resource class="%codebuds_sylius_fcm_plugin.model.shop_user_fcm_token.class%" shortName="ShopUserFCMToken">
+        <attribute name="validation_groups">codebuds</attribute>
+
+        <collectionOperations>
+            <collectionOperation name="shop_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/admin/ShopUserFCMTokens</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">admin:topic:read</attribute>
+                </attribute>
+            </collectionOperation>
+        </collectionOperations>
+        <itemOperations>
+            <itemOperation name="admin_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/shop/ShopUserFCMTokens/{id}</attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">admin:topic-subscription:read</attribute>
+                    <attribute name="groups">admin:topic:read</attribute>
+                </attribute>
+            </itemOperation>
+        </itemOperations>
+
+        <property name="id" identifier="true" writable="false"/>
+        <property name="topic" writable="true"/>
+        <property name="token" writable="false"/>
+        <property name="product" writable="true"/>
+    </resource>
+</resources>

@@ -1,0 +1,30 @@
+CodeBuds\SyliusFCMPlugin\Entity\FCMNotification:
+    type: entity
+    table: codebuds_fcm_notification
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: recipient
+        type: string
+        length: 255
+    
+    id:
+        id:
+            type: integer
+            if: true
+            generator:
+                strategy: AUTO
+    
+    fields:
+        title:
+            type: string
+            column: title
+        body:
+            type: string
+            column: body
+        createdAt:
+            column: created_at
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: create

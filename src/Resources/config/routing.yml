@@ -1,0 +1,7 @@
+codebuds_sylius_fcm_plugin_admin:
+    resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/admin.yml"
+    prefix: "/%sylius_admin.path_name%"
+
+codebuds_sylius_fcm_plugin_api:
+    resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/api.yml"
+    prefix: "%sylius.security.new_api_route%"

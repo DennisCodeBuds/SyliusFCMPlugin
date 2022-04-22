@@ -1,0 +1,34 @@
+sylius_grid:
+    grids:
+        codebuds_sylius_fcm_plugin_admin_shop_user_tokens:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%codebuds_sylius_fcm_plugin.model.shop_user_fcm_token.class%"
+            sorting:
+                createdAt: desc
+            fields:
+                owner:
+                    type: twig
+                    label: sylius.ui.shop_user
+                    options:
+                        template: "@CodeBudsSyliusFCMPlugin/Grid/Field/shopUser.html.twig"
+                value:
+                    type: string
+                    label: sylius.ui.title
+                createdAt:
+                    sortable: true
+                    type: datetime
+                    label: sylius.ui.created_at
+            filters:
+                shop_user:
+                    type: string
+                    label: sylius.ui.shop_user
+                    options:
+                        fields: [ shop_user.email, shop_user.firstName, shop_user.lastName ]
+                date:
+                    type: date
+                    label: sylius.ui.date
+                    options:
+                        field: createdAt
+                        inclusive_to: true

@@ -1,0 +1,41 @@
+CodeBuds\SyliusFCMPlugin\Entity\FCMEntityTopic:
+    type: entity
+    table: codebuds_fcm_entity_topic
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: entity
+        type: string
+        length: 255
+
+    id:
+        id:
+            type: integer
+            if: true
+            generator:
+                strategy: AUTO
+    fields:
+        topicId:
+            type: string
+            column: topic_id
+            required: true
+            nullable: false
+            unique: true
+        createdAt:
+            column: created_at
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            column: updated_at
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: update
+
+    oneToMany:
+        subscriptions:
+            targetEntity: CodeBuds\SyliusFCMPlugin\Entity\TopicSubscriptionInterface
+            mappedBy: topic

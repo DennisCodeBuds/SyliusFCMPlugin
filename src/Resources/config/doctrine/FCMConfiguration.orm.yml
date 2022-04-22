@@ -1,0 +1,28 @@
+CodeBuds\SyliusFCMPlugin\Entity\FCMConfiguration:
+    type: mappedSuperclass
+    table: codebuds_fcm_configuration
+    id:
+        id:
+            type: integer
+            if: true
+            generator:
+                strategy: AUTO
+    
+    fields:
+        key:
+            type: string
+            column: value
+        createdAt:
+            column: created_at
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            column: updated_at
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: update

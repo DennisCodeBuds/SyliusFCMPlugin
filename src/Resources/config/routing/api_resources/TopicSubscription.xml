@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+
+<resources xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="https://api-platform.com/schema/metadata"
+           xsi:schemaLocation="https://api-platform.com/schema/metadata https://api-platform.com/schema/metadata/metadata-2.0.xsd"
+>
+    <resource class="%codebuds_sylius_fcm_plugin.model.topic_subscription.class%" shortName="TopicSubscription">
+        <attribute name="validation_groups">codebuds</attribute>
+
+        <collectionOperations>
+            <collectionOperation name="shop_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/admin/topic-subscriptions</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">admin:topic-subscription:read</attribute>
+                    <attribute name="groups">admin:topic:read</attribute>
+                </attribute>
+            </collectionOperation>
+
+            <collectionOperation name="shop_post">
+                <attribute name="method">POST</attribute>
+                <attribute name="path">/shop/topic-subscriptions</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">shop:topic-subscription:read</attribute>
+                </attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">shop:topic-subscription-input:create</attribute>
+                </attribute>
+                <attribute name="controller">CodeBuds\SyliusFCMPlugin\Controller\CreateTopicSubscription</attribute>
+                <attribute name="input">CodeBuds\SyliusFCMPlugin\Dto\TopicInput</attribute>
+                <!-- The validation is done for each of the users tokens in the event listener not for the returned topic subscription -->
+                <attribute name="validate">false</attribute>
+                <!-- Persistance is done in the event listener for all the users tokens -->
+                <attribute name="write">false</attribute>
+            </collectionOperation>
+        </collectionOperations>
+        <itemOperations>
+            <itemOperation name="admin_get">
+                <attribute name="method">GET</attribute>
+                <attribute name="path">/shop/topic-subscriptions/{id}</attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">admin:topic-subscription:read</attribute>
+                    <attribute name="groups">admin:topic:read</attribute>
+                </attribute>
+            </itemOperation>
+        </itemOperations>
+
+        <property name="id" identifier="true" writable="false"/>
+        <property name="topic" writable="true"/>
+        <property name="token" writable="true"/>
+    </resource>
+</resources>

@@ -1,0 +1,26 @@
+codebuds_sylius_fcm_plugin:
+    ui:
+        configuration: 'Configuration'
+        title: 'Title'
+        body: 'Body'
+        recipient: 'Recipient'
+        label: 'FCM notifications'
+        notification: 'Notification' 
+        shop_user_fcm_notifications: 'ShopUser notifications'
+        shop_user_fcm_tokens: 'ShopUser tokens'
+        credentials_file: 'Credentials file'
+        file_exists: 'The configuration files exists at %filepath%, it has last been updated on %updated_on%'
+        import:
+            help: 'Careful you will override the current configuration if there is one'
+            not_blank: 'No file was submitted'
+            button: 'Submit'
+            invalid_format: 'The fiel ahs to be JSON format'
+
+        test_notification:
+            button: 'Send'
+
+    topic_subscription:
+        token: 
+            not_blank: 'Blank'
+        topic: 
+            not_blank: 'dcivh'

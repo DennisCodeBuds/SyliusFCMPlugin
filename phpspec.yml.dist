@@ -1,0 +1,4 @@
+suites:
+    main:
+        namespace: CodeBuds\SyliusFCMPlugin
+        psr4_prefix: CodeBuds\SyliusFCMPlugin

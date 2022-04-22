@@ -1,0 +1,3 @@
+codebuds_sylius_fcm_plugin_api:
+    resource: ./api_resources
+    type: api_platform

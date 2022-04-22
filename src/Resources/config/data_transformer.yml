@@ -1,0 +1,6 @@
+services:
+    codebuds_sylius_fcm_plugin.data_transformer.topic_input:
+        class: CodeBuds\SyliusFCMPlugin\DataTransformer\TopicInputDataTransformer
+        tags: [ 'api_platform.data_transformer' ]
+        arguments:
+          [ '@sylius.repository.product', '@codebuds_sylius_fcm_plugin.repository.entity_fcm_topic', '@event_dispatcher' ]

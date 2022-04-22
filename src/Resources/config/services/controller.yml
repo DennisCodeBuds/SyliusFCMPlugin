@@ -1,0 +1,48 @@
+services:
+    codebuds_sylius_fcm_plugin.controller.fcm_configuration.overridden:
+        parent: codebuds_sylius_fcm_plugin.controller.fcm_configuration
+        class: CodeBuds\SyliusFCMPlugin\Controller\FCMConfigurationController
+        public: true
+        calls:
+            -   setCredentialsFileLocation: [ '%kernel.project_dir%/config/firebase_credentials.json' ]
+            -   setFormFactory: [ '@form.factory' ]
+            -   setTwigEnvironment: [ '@twig' ]
+            -   setFCMService: [ '@codebuds_sylius_fcm_plugin.service.messaging' ]
+
+    codebuds_sylius_fcm_plugin.controller.subscribe_to_topic:
+        class: CodeBuds\SyliusFCMPlugin\Controller\SubscribeToTopic
+        public: true
+        tags: [ 'controller.service_arguments' ]
+        arguments:
+          [ '@event_dispatcher', '@doctrine.orm.entity_manager' ]
+        
+    codebuds_sylius_fcm_plugin.controller.toggle_topic_subscription:
+        class: CodeBuds\SyliusFCMPlugin\Controller\ToggleTopicSubscription
+        public: true
+        tags: [ 'controller.service_arguments' ]
+        arguments:
+          [ '@event_dispatcher', '@doctrine.orm.entity_manager' ]
+
+    CodeBuds\SyliusFCMPlugin\Controller\SubscribeToTopic:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+        arguments:
+          [ '@event_dispatcher', '@doctrine.orm.entity_manager' ]
+    
+    CodeBuds\SyliusFCMPlugin\Controller\UnsubscribeFromTopic:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+        arguments:
+          [ '@event_dispatcher', '@doctrine.orm.entity_manager' ]
+
+    CodeBuds\SyliusFCMPlugin\Controller\CreateTopicSubscription:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+        arguments:
+          [ '@event_dispatcher', '@doctrine.orm.entity_manager' ]
+
+    CodeBuds\SyliusFCMPlugin\Controller\ToggleTopicSubscription:
+        public: true
+        tags: [ 'controller.service_arguments' ]
+        arguments:
+          [ '@event_dispatcher', '@doctrine.orm.entity_manager' ]

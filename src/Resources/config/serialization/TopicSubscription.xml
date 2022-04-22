@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<serializer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://symfony.com/schema/dic/serializer-mapping"
+            xsi:schemaLocation="http://symfony.com/schema/dic/serializer-mapping https://symfony.com/schema/dic/serializer-mapping/serializer-mapping-1.0.xsd"
+>
+    <class name="CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription">
+        <attribute name="id">
+            <group>admin:topic-subscription:read</group>
+        </attribute>
+        <attribute name="topic">
+            <group>admin:topic-subscription:read</group>
+            <group>shop:topic-subscription:read</group>
+            <group>shop:topic-subscription:create</group>
+            <group>shop:topic-subscription:toggle</group>
+        </attribute>
+        <attribute name="token">
+            <group>admin:topic-subscription:read</group>
+            <group>admin:topic:read</group>
+            <group>shop:topic-subscription:read</group>
+            <group>shop:topic-subscription:create</group>
+        </attribute>
+    </class>
+</serializer>

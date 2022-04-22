@@ -1,0 +1,26 @@
+<container xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="http://symfony.com/schema/dic/services"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!--Command-->
+        <service id="codebuds_sylius_fcm_plugin.command.generate_product_topics"
+                 class="CodeBuds\SyliusFCMPlugin\Command\FcmProductTopicsGenerateCommand" public="true">
+            <argument type="service" id="sylius.repository.product"/>
+            <argument type="service" id="codebuds_sylius_fcm_plugin.repository.entity_fcm_topic"/>
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <tag name="console.command" command="fcm:product-topics:generate" alias="topics:product:generate"/>
+        </service>
+        <service id="CodeBuds\SyliusFCMPlugin\Command\FcmProductTopicsGenerateCommand"
+                 alias="codebuds_sylius_fcm_plugin.command.generate_product_topics" public="true"/>
+
+        <service id="codebuds_sylius_fcm_plugin.command.get_user_topic_subscriptions"
+                 class="CodeBuds\SyliusFCMPlugin\Command\FcmGetUserTopicSubscriptionsCommand" public="true">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="codebuds_sylius_fcm_plugin.service.messaging"/>
+            <tag name="console.command" command="fcm:topic-subscriptions:get" alias="topics:subscriptions:get"/>
+        </service>
+        <service id="CodeBuds\SyliusFCMPlugin\Command\FcmGetUserTopicSubscriptionsCommand"
+                 alias="codebuds_sylius_fcm_plugin.command.get_user_topic_subscriptions" public="true"/>
+    </services>
+</container>

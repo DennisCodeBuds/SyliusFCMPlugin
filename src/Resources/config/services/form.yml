@@ -1,0 +1,22 @@
+services: 
+    codebuds_sylius_fcm_plugin.form.type.shop_user_notification:
+        class: CodeBuds\SyliusFCMPlugin\Form\Type\ShopUserFCMNotificationType
+        arguments:
+            - "%codebuds_sylius_fcm_plugin.model.shop_user_fcm_notification.class%"
+            - "%codebuds_sylius_fcm_plugin.form.type.shop_user_fcm_notification.validation_groups%"
+        tags:
+            - { name: form.type }
+
+    codebuds_sylius_fcm_plugin.form.type.import:
+        class: CodeBuds\SyliusFCMPlugin\Form\Type\ImportType
+        arguments:
+            - "@translator"
+        tags:
+            - { name: form.type }
+
+    codebuds_sylius_fcm_plugin.form.type.test_notification:
+        class: CodeBuds\SyliusFCMPlugin\Form\Type\TestNotificationType
+        arguments:
+            - "@translator"
+        tags:
+            - { name: form.type }

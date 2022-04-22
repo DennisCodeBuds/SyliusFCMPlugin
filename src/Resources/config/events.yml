@@ -1,0 +1,35 @@
+services:
+    codebuds_sylius_fcm_plugin.event.fcm_topic_unsubscribed:
+        class: CodeBuds\SyliusFCMPlugin\EventListener\TopicUnsubscribedListener
+        tags:
+            - { name: kernel.event_listener, event: fcm.topic.unsubscribed }
+        arguments:
+          [ '@codebuds_sylius_fcm_plugin.service.fcm_topic' ]
+    
+    codebuds_sylius_fcm_plugin.event.fcm_toggle_topic_subscription:
+        class: CodeBuds\SyliusFCMPlugin\EventListener\ToggleTopicSubscriptionListener
+        tags:
+            - { name: kernel.event_listener, event: fcm.topic.subscription.toggle }
+        arguments:
+          [ '@codebuds_sylius_fcm_plugin.service.fcm_topic', '@security.helper' ]
+
+    codebuds_sylius_fcm_plugin.event.fcm_topic_subscribed:
+        class: CodeBuds\SyliusFCMPlugin\EventListener\TopicSubscribedListener
+        tags:
+            - { name: kernel.event_listener, event: fcm.topic.subscribed }
+        arguments:
+          [ '@codebuds_sylius_fcm_plugin.service.fcm_token', '@codebuds_sylius_fcm_plugin.service.fcm_topic' ]
+    
+    codebuds_sylius_fcm_plugin.event_listener.fcm_topic_subscription:
+        class: CodeBuds\SyliusFCMPlugin\EventListener\TopicSubscriptionListener
+        tags:
+            - { name: kernel.event_listener, event: fcm.topic.subscription }
+        arguments:
+          [ '@codebuds_sylius_fcm_plugin.service.fcm_token', '@doctrine.orm.entity_manager', '@validator' ]
+    
+    codebuds_sylius_fcm_plugin.event.authentication_success_listener:
+        class: CodeBuds\SyliusFCMPlugin\EventListener\AuthenticationSuccessListener
+        arguments: [ '@request_stack', '@doctrine.orm.entity_manager', '@codebuds_sylius_fcm_plugin.service.fcm_topic' ]
+        tags:
+            - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
+    

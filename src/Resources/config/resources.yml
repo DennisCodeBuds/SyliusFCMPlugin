@@ -1,0 +1,9 @@
+imports:
+    - { resource: resources/shop_user_fcm_token.yml }
+    - { resource: resources/shop_user_fcm_notification.yml }
+    - { resource: resources/fcm_configuration.yml }
+    - { resource: resources/topic_subscription.yml }
+    - { resource: resources/product_fcm_topic.yml }
+    - { resource: resources/fcm_entity_topic.yml }
+    - { resource: resources/fcm_token.yml }
+    - { resource: resources/fcm_token.yml }

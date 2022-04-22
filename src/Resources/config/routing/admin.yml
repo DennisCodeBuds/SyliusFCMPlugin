@@ -1,0 +1,9 @@
+codebuds_sylius_fcm_plugin_admin_shop_user_notifications:
+    resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/shop_user_fcm_notifications.yml"
+
+codebuds_sylius_fcm_plugin_admin_shop_user_tokens:
+    resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/shop_user_fcm_tokens.yml"
+
+
+codebuds_sylius_fcm_plugin_admin_configuration:
+    resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/fcm_configuration.yml"

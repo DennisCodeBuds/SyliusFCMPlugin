@@ -1,0 +1,3 @@
+services:
+    codebuds_sylius_fcm_plugin.dto.topic_input:
+        class: CodeBuds\SyliusFCMPlugin\Dto\TopicInput

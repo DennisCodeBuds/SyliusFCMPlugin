@@ -1,0 +1,9 @@
+sylius_resource:
+    resources:
+        codebuds_sylius_fcm_plugin.fcm_configuration:
+            driver: doctrine/orm
+            classes:
+                model: CodeBuds\SyliusFCMPlugin\Entity\FCMConfiguration
+                interface: CodeBuds\SyliusFCMPlugin\Entity\FCMConfigurationInterface
+                repository: CodeBuds\SyliusFCMPlugin\Repository\FCMConfigurationRepository
+                controller: CodeBuds\SyliusFCMPlugin\Controller\FCMConfigurationController

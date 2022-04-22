@@ -1,0 +1,29 @@
+{% extends '@CodeBudsSyliusFCMPlugin/layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+
+
+{% set header = configuration.vars.header|default(metadata.applicationName~'.ui.edit_'~metadata.name) %}
+{% set event_prefix = metadata.applicationName ~ '.admin.' ~ metadata.name ~ '.update' %}
+
+{% block title %}{{ header|trans }} {{ parent() }}{% endblock %}
+
+{% block content %}
+
+    <div class="ui segment">
+        <h1>FCM configuration</h1>
+        <h2>Credentials</h2>
+        {% include '@CodeBudsSyliusFCMPlugin/Grid/Form/_importForm.html.twig' with {'form': importForm, 'credentialsInformation': credentialsInformation} %}
+    </div>
+
+    <div class="ui segment">
+        <h2>Test Notification</h2>
+        {% include '@CodeBudsSyliusFCMPlugin/Grid/Form/_testNotificationForm.html.twig' with {'form': testNotificationForm } %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('codebuds-fcm-admin', null, 'admin') }}
+    {{ sylius_template_event('sylius.admin.layout.javascripts') }}
+{% endblock %}

@@ -1,0 +1,35 @@
+CodeBuds\SyliusFCMPlugin\Entity\FCMToken:
+    type: entity
+    table: codebuds_fcm_token
+    inheritanceType: SINGLE_TABLE
+    discriminatorColumn:
+        name: owner
+        type: string
+        length: 255
+
+    id:
+        id:
+            type: integer
+            if: true
+            generator:
+                strategy: AUTO
+    fields:
+        value:
+            column: value
+            type: string
+            nullable: false
+        
+        createdAt:
+            column: created_at
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: create
+        updatedAt:
+            column: updated_at
+            type: datetime
+            nullable: true
+            gedmo:
+                timestampable:
+                    on: update

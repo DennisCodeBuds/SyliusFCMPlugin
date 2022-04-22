@@ -1,0 +1,6 @@
+codebuds_sylius_fcm_plugin:
+    topic_subscription:
+        token:
+            not_blank: 'Blank'
+        topic:
+            not_blank: 'dcivh'

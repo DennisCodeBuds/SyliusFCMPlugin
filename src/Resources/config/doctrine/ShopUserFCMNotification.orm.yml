@@ -1,0 +1,17 @@
+CodeBuds\SyliusFCMPlugin\Entity\ShopUserFCMNotification:
+    type: mappedSuperclass
+    table: codebuds_fcm_shop_user_notification
+
+    manyToOne:
+        shopUser:
+            targetEntity: Sylius\Component\Core\Model\ShopUserInterface
+            joinTable:
+                name: codebuds_fcm_token_shop_user
+                joinColumns:
+                    codebuds_fcm_entity_shop_user_id:
+                        referencedColumnName: id
+                        onDelete: CASCADE #TODO check this
+                inverseJoinColumns:
+                    shop_user_id:
+                        referencedColumnName: id
+                        onDelete: CASCADE #TODO check this
