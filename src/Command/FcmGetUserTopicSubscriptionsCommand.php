@@ -4,7 +4,6 @@ namespace CodeBuds\SyliusFCMPlugin\Command;
 
 use CodeBuds\SyliusFCMPlugin\Service\FirebaseMessaging;
 use Doctrine\ORM\EntityManagerInterface;
-use getUserTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -13,7 +12,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class FcmGetUserTopicSubscriptionsCommand extends Command
 {
-    use getUserTrait;
+    use GetUserTrait;
 
     protected static $defaultName = 'fcm:topic-subscriptions:get';
     protected static $defaultDescription = 'Get a list of the topic subscriptions for a user';

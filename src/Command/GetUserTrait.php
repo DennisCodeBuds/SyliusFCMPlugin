@@ -1,9 +1,11 @@
 <?php
 
+namespace CodeBuds\SyliusFCMPlugin\Command;
+
 use App\Entity\User\ShopUser;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenOwnerInterface;
 
-trait getUserTrait
+trait GetUserTrait
 {
     protected function getUser($input, $io): FCMTokenOwnerInterface
     {

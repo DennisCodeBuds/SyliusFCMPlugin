@@ -5,7 +5,6 @@ namespace CodeBuds\SyliusFCMPlugin\Command;
 use CodeBuds\SyliusFCMPlugin\Service\FCMTopicService;
 use CodeBuds\SyliusFCMPlugin\Service\FirebaseMessaging;
 use Doctrine\ORM\EntityManagerInterface;
-use getUserTrait;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -14,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class FcmUnsubscribeUserFromTopicsCommand extends Command
 {
-    use getUserTrait;
+    use GetUserTrait;
 
     protected static $defaultName = 'fcm:topic-subscriptions:unsubscribe';
     protected static $defaultDescription = 'Unsubscribe a user from a topic or from all topics';
