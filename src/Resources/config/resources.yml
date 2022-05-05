@@ -6,4 +6,5 @@ imports:
     - { resource: resources/product_fcm_topic.yml }
     - { resource: resources/fcm_entity_topic.yml }
     - { resource: resources/fcm_token.yml }
-    - { resource: resources/fcm_token.yml }
+    - { resource: resources/fcm_notification.yml }
+    - { resource: resources/product_fcm_notification.yml }

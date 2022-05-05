@@ -2,7 +2,7 @@
 
 namespace CodeBuds\SyliusFCMPlugin\Entity;
 
-interface ProductFCMTopicInterface
+interface ProductFCMTopicInterface extends FCMEntityTopicInterface
 {
     public function generateTopicId(): self;
 }

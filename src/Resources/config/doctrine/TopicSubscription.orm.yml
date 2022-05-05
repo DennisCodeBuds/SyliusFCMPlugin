@@ -6,25 +6,27 @@ CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription:
             type: integer
             if: true
             generator:
-                strategy: AUTO   
-                
+                strategy: AUTO
+    
     manyToOne:
         topic:
             targetEntity: CodeBuds\SyliusFCMPlugin\Entity\FCMEntityTopicInterface
             inversedBy: subscriptions
+            cascade:
+                - persist
             joinColumns:
-                codebuds_fcm_topic_id:
+                topic_id:
                     referencedColumnName: id
                     onDelete: CASCADE #TODO check this
             inverseJoinColumns:
                 topic_subscription_id:
                     referencedColumnName: id
                     onDelete: CASCADE #TODO check this
-                    
+        
         token:
             targetEntity: CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface
             joinColumns:
-                codebuds_fcm_token_id:
+                token_id:
                     referencedColumnName: id
                     onDelete: CASCADE #TODO check this
             inverseJoinColumns:

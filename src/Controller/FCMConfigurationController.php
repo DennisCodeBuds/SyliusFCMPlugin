@@ -9,6 +9,7 @@ use CodeBuds\SyliusFCMPlugin\Form\Type\ImportType;
 use CodeBuds\SyliusFCMPlugin\Form\Type\TestNotificationType;
 use CodeBuds\SyliusFCMPlugin\Repository\FCMConfigurationRepositoryInterface;
 use CodeBuds\SyliusFCMPlugin\Service\FirebaseMessaging;
+use DateTime;
 use Kreait\Firebase\Exception\FirebaseException;
 use Kreait\Firebase\Exception\MessagingException;
 use Sylius\Bundle\ResourceBundle\Controller\ResourceController;
@@ -24,7 +25,6 @@ use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintViolation;
 use Twig\Environment;
-use Webmozart\Assert\Assert;
 
 class FCMConfigurationController extends ResourceController
 {
@@ -58,9 +58,8 @@ class FCMConfigurationController extends ResourceController
                 $this->metadata->getName() => $configuration,
             ]);
         }
-        Assert::true(null !== $this->viewHandler);
 
-        return $this->viewHandler->handle($requestConfiguration, View::create($configuration));
+        return $this->createRestView($requestConfiguration, $configuration);
     }
 
     private function getFileInformation(): ?array
@@ -71,7 +70,7 @@ class FCMConfigurationController extends ResourceController
         if ($credentialsExist) {
             $credentialsInformation = [
                 'filename' => $this->credentialsFileLocation,
-                'modified' => (new \DateTime())->setTimestamp(filemtime($this->credentialsFileLocation))
+                'modified' => (new DateTime())->setTimestamp(filemtime($this->credentialsFileLocation))
             ];
         }
         return $credentialsInformation ?? null;

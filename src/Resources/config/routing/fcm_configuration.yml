@@ -2,7 +2,7 @@ codebuds_sylius_fcm_plugin_admin_configuration:
     path: /fcm-configuration
     methods: [ GET, POST, PUT ]
     defaults:
-        _controller: codebuds_sylius_fcm_plugin.controller.fcm_configuration.overridden:showAction
+        _controller: codebuds_sylius_fcm_plugin.controller.fcm_configuration.overridden::showAction
         _sylius:
             template: "@CodeBudsSyliusFCMPlugin/FCMConfiguration/show.html.twig"
         id: null
@@ -11,10 +11,10 @@ codebuds_sylius_fcm_plugin_admin_configuration_upload:
     path: /fcm-configuration/upload
     methods: [ POST ]
     defaults:
-        _controller: codebuds_sylius_fcm_plugin.controller.fcm_configuration.overridden:uploadAction
+        _controller: codebuds_sylius_fcm_plugin.controller.fcm_configuration.overridden::uploadAction
 
 codebuds_sylius_fcm_plugin_admin_configuration_test_notification:
     path: /fcm-configuration/test-notification
     methods: [ POST ]
     defaults:
-        _controller: codebuds_sylius_fcm_plugin.controller.fcm_configuration.overridden:testNotificationAction
+        _controller: codebuds_sylius_fcm_plugin.controller.fcm_configuration.overridden::testNotificationAction

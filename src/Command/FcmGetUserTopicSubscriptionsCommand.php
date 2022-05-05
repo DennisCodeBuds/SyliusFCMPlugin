@@ -5,6 +5,9 @@ namespace CodeBuds\SyliusFCMPlugin\Command;
 use CodeBuds\SyliusFCMPlugin\Service\FirebaseMessaging;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
+use Symfony\Component\Console\Helper\TableCell;
+use Symfony\Component\Console\Helper\TableSeparator;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -47,9 +50,26 @@ class FcmGetUserTopicSubscriptionsCommand extends Command
 
         $subscriptions = $this->messaging->getTopicSubscriptions($user);
 
+        $table = new Table($output);
+        $table
+            ->setHeaders(['Token', 'Topic']);
+
+
+        $count = 0;
         foreach ($subscriptions as $subscription) {
-            $io->comment("{$subscription->registrationToken()} is subscribed to {$subscription->topic()}\n");
+            $count++;
+            $token = mb_strimwidth($subscription->registrationToken(), 0, 10, "...");
+            $table->addRow([$token, $subscription->topic()]);
         }
+
+        $table->addRows([
+            new TableSeparator(),
+            [new TableCell('Total'), new TableCell($count)]
+        ]);
+
+        $table->render();
+
+
 
         return Command::SUCCESS;
     }

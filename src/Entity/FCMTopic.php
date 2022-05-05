@@ -17,6 +17,8 @@ abstract class FCMTopic implements ResourceInterface, FCMTopicInterface
 
     protected bool $subscribed;
 
+    protected string $toggleRoute;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,4 +53,17 @@ abstract class FCMTopic implements ResourceInterface, FCMTopicInterface
         $this->subscribed = $subscribed;
         return $this;
     }
+
+    public function getToggleRoute(): string
+    {
+        return $this->toggleRoute;
+    }
+
+    public function setToggleRoute(string $toggleRoute): FCMTopic
+    {
+        $this->toggleRoute = $toggleRoute;
+        return $this;
+    }
+
+
 }

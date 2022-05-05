@@ -5,9 +5,14 @@ codebuds_sylius_fcm_plugin:
         body: 'Body'
         recipient: 'Recipient'
         label: 'FCM notifications'
-        notification: 'Notification' 
+        notification: 'Notification'
+        subscriptions: 'Subscriptions'
         shop_user_fcm_notifications: 'ShopUser notifications'
+        product_fcm_notifications: 'Product notifications'
+        fcm_notifications: 'Notifications'
         shop_user_fcm_tokens: 'ShopUser tokens'
+        shop_user: 'Shop User'
+        product_fcm_topics: 'Product topics'
         credentials_file: 'Credentials file'
         file_exists: 'The configuration files exists at %filepath%, it has last been updated on %updated_on%'
         import:
@@ -20,7 +25,10 @@ codebuds_sylius_fcm_plugin:
             button: 'Send'
 
     topic_subscription:
-        token: 
+        token:
             not_blank: 'Blank'
-        topic: 
+        topic:
             not_blank: 'dcivh'
+
+    actions:
+        notify: Notify

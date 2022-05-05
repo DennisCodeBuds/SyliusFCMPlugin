@@ -6,8 +6,6 @@ use Sylius\Component\Core\Model\ShopUserInterface;
 
 class ShopUserFCMToken extends FCMToken
 {
-    protected $owner;
-
     protected $shopUser;
 
     /**

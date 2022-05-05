@@ -1,0 +1,17 @@
+{% extends '@CodeBudsSyliusFCMPlugin/layout.html.twig' %}
+
+{% import '@SyliusUi/Macro/headers.html.twig' as headers %}
+{% import '@SyliusUi/Macro/buttons.html.twig' as buttons %}
+
+{% block content %}
+
+    <div class="ui segment">
+        <h2>Notification</h2>
+        {% include '@CodeBudsSyliusFCMPlugin/Grid/Form/_promotionalNotificationForm.html.twig' with {'form': notificationForm } %}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('codebuds-fcm-admin', null, 'admin') }}
+    {{ sylius_template_event('sylius.admin.layout.javascripts') }}
+{% endblock %}

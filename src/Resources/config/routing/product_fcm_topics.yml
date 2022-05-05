@@ -1,0 +1,11 @@
+
+
+codebuds_sylius_fcm_plugin_admin_product_fcm_topics:
+    resource: |
+        alias: codebuds_sylius_fcm_plugin.product_fcm_topic
+        section: admin
+        templates: "@SyliusAdmin\\Crud"
+        redirect: update
+        permission: true
+        grid: codebuds_sylius_fcm_plugin_admin_product_fcm_topics      
+    type: sylius.resource

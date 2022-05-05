@@ -20,10 +20,6 @@ abstract class FCMNotificationType extends AbstractResourceType
             ->add('body', TextareaType::class, [
                 'label' => 'codebuds_sylius_fcm_plugin.ui.body',
             ])
-//            ->add('products', ProductAutocompleteChoiceType::class, [
-//                'label' => 'bitbag_sylius_cms_plugin.ui.products',
-//                'multiple' => true,
-//            ])
         ;
     }
 }

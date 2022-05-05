@@ -6,3 +6,4 @@ sylius_resource:
                 model: CodeBuds\SyliusFCMPlugin\Entity\ShopUserFCMNotification
                 interface: CodeBuds\SyliusFCMPlugin\Entity\FCMNotificationInterface
                 form: CodeBuds\SyliusFCMPlugin\Form\Type\ShopUserFCMNotificationType
+                controller: CodeBuds\SyliusFCMPlugin\Controller\ShopUserFCMNotificationController

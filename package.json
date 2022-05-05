@@ -1,8 +1,8 @@
 {
-    "name": "@codebuds/fcm-plugin",
-    "description": "FCM plugin for Sylius.",
-    "license": "MIT",
-    "scripts": {
-        "dist": "yarn encore production --config-name codebuds-plugin-dist"
-    }
+  "name": "@codebuds/sylius-fcm-plugin",
+  "description": "FCM plugin for Sylius.",
+  "license": "MIT",
+  "scripts": {
+    "dist": "yarn encore production --config-name codebuds-plugin-dist"
+  }
 }

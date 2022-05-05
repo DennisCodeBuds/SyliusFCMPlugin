@@ -1,0 +1,42 @@
+sylius_grid:
+    templates:
+        action:
+            publishProductFcmTopic: "@CodeBudsSyliusFCMPlugin/Grid/Action/publishProductFcmTopic.html.twig"
+    grids:
+        codebuds_sylius_fcm_plugin_admin_product_fcm_topics:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%codebuds_sylius_fcm_plugin.model.product_fcm_topic.class%"
+            fields:
+                product:
+                    type: twig
+                    label: sylius.ui.product
+                    options:
+                        template: "@CodeBudsSyliusFCMPlugin/Grid/Field/product.html.twig"
+                subscriptions:
+                    type: count
+                    label: codebuds_sylius_fcm_plugin.ui.subscriptions
+            filters:
+                product:
+                    type: string
+                    label: sylius.ui.product
+                    options:
+                        fields: [ product.name ]
+                date:
+                    type: date
+                    label: sylius.ui.date
+                    options:
+                        field: createdAt
+                        inclusive_to: true
+            actions:
+                item:
+                    notify:
+                        type: notify
+                        label: codebuds_sylius_fcm_plugin.actions.notify
+                        options:
+                            link:
+                                route: codebuds_sylius_fcm_plugin_admin_product_notify
+                                parameters:
+                                    topic_id: resource.id
+

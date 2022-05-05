@@ -11,4 +11,6 @@ interface FCMTopicInterface
     public function isSubscribed(): bool;
 
     public function setSubscribed(bool $subscribed): self;
+
+    public function getSubscriptions();
 }

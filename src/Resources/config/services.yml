@@ -4,4 +4,10 @@ imports:
     - { resource: services/controller.yml }
     - { resource: services/service.yml }
 
-
+services:
+    codebuds_sylius_fcm_plugin.grid_field.count:
+        class: CodeBuds\SyliusFCMPlugin\Grid\FieldType\CountType
+        arguments:
+            $dataExtractor: '@sylius.grid.data_extractor'
+        tags:
+            - { name: sylius.grid_field, type: count }

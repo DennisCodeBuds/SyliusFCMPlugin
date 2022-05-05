@@ -6,8 +6,13 @@ codebuds_sylius_fcm_plugin:
         recipient: 'Destinataire'
         label: 'FCM notifications'
         notification: 'Notification'
+        subscriptions: 'Inscrits'
         shop_user_fcm_notifications: 'Notifications client'
+        product_fcm_notifications: 'Notifications produits'
+        fcm_notifications: 'Notifications'
         shop_user_fcm_tokens: 'Tokens client'
+        shop_user: 'Client'
+        product_fcm_topics: 'Product topics'
         credentials_file: 'Fichier authentification'
         file_exists: 'Le fichier de configuration existe à %filepath%, il a été modifié pour la dernière fois le %updated_on%'
         import:
@@ -18,3 +23,6 @@ codebuds_sylius_fcm_plugin:
 
         test_notification:
             button: 'Envoyer'
+
+    actions:
+        notify: Notifier

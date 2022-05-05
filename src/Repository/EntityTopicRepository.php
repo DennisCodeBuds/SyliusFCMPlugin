@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Sylius\Component\Product\Model\ProductInterface;
 
-class EntityTopicRepository
+class EntityTopicRepository implements EntityTopicRepositoryInterface
 {
     public EntityRepository $repository;
     private EntityRepository $productTopicRepository;

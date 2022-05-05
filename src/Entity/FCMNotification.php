@@ -19,6 +19,8 @@ abstract class FCMNotification implements ResourceInterface, FCMNotificationInte
 
     protected $topic;
 
+    protected $data;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -68,6 +70,17 @@ abstract class FCMNotification implements ResourceInterface, FCMNotificationInte
     public function setTopic(?FCMTopicInterface $topic): self
     {
         $this->topic = $topic;
+        return $this;
+    }
+
+    public function getData()
+    {
+        return $this->data;
+    }
+
+    public function setData($data)
+    {
+        $this->data = $data;
         return $this;
     }
 }

@@ -1,0 +1,23 @@
+codebuds_sylius_fcm_plugin_admin_product_notify:
+    path: /product-fcm-notifications/new
+    methods: [ GET, POST, PUT ]
+    defaults:
+        _controller: codebuds_sylius_fcm_plugin.controller.product_fcm_notification.overridden::createAction
+        _sylius:
+            template: "@CodeBudsSyliusFCMPlugin/FCMNotifications/Product/create.html.twig"
+            section: admin
+            permission: true
+
+codebuds_sylius_fcm_plugin_admin_product_notifications:
+    resource: |
+        alias: codebuds_sylius_fcm_plugin.product_fcm_notification
+        section: admin
+        templates: "@SyliusAdmin\\Crud"
+        redirect: index
+        permission: true
+        grid: codebuds_sylius_fcm_plugin_admin_product_notifications
+        except: ['create']
+        vars:
+            all:
+                subheader: codebuds_sylius_fcm_plugin.ui.notification
+    type: sylius.resource

@@ -21,6 +21,10 @@ CodeBuds\SyliusFCMPlugin\Entity\FCMNotification:
         body:
             type: string
             column: body
+        data:
+            type: json
+            column: data
+            nullable: true
         createdAt:
             column: created_at
             type: datetime

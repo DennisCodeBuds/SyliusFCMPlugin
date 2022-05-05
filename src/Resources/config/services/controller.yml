@@ -8,6 +8,33 @@ services:
             -   setFormFactory: [ '@form.factory' ]
             -   setTwigEnvironment: [ '@twig' ]
             -   setFCMService: [ '@codebuds_sylius_fcm_plugin.service.messaging' ]
+    
+    codebuds_sylius_fcm_plugin.controller.fcm_notification.overridden:
+        parent: codebuds_sylius_fcm_plugin.controller.fcm_notification
+        class: CodeBuds\SyliusFCMPlugin\Controller\FCMNotificationController
+        public: true
+        calls:
+            -   setFormFactory: [ '@form.factory' ]
+            -   setTwigEnvironment: [ '@twig' ]
+            -   setFCMService: [ '@codebuds_sylius_fcm_plugin.service.messaging' ]
+                
+    codebuds_sylius_fcm_plugin.controller.shop_user_fcm_notification.overridden:
+        parent: codebuds_sylius_fcm_plugin.controller.shop_user_fcm_notification
+        class: CodeBuds\SyliusFCMPlugin\Controller\ShopUserFCMNotificationController
+        public: true
+        calls:
+            -   setFormFactory: [ '@form.factory' ]
+            -   setTwigEnvironment: [ '@twig' ]
+            -   setFCMService: [ '@codebuds_sylius_fcm_plugin.service.messaging' ]
+                
+    codebuds_sylius_fcm_plugin.controller.product_fcm_notification.overridden:
+        parent: codebuds_sylius_fcm_plugin.controller.product_fcm_notification
+        class: CodeBuds\SyliusFCMPlugin\Controller\ProductFCMNotificationController
+        public: true
+        calls:
+            -   setFormFactory: [ '@form.factory' ]
+            -   setTwigEnvironment: [ '@twig' ]
+            -   setFCMService: [ '@codebuds_sylius_fcm_plugin.service.messaging' ]
 
     codebuds_sylius_fcm_plugin.controller.subscribe_to_topic:
         class: CodeBuds\SyliusFCMPlugin\Controller\SubscribeToTopic
@@ -15,7 +42,7 @@ services:
         tags: [ 'controller.service_arguments' ]
         arguments:
           [ '@event_dispatcher', '@doctrine.orm.entity_manager' ]
-        
+    
     codebuds_sylius_fcm_plugin.controller.toggle_topic_subscription:
         class: CodeBuds\SyliusFCMPlugin\Controller\ToggleTopicSubscription
         public: true

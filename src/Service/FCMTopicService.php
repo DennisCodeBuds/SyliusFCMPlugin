@@ -5,10 +5,16 @@ namespace CodeBuds\SyliusFCMPlugin\Service;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenOwnerInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTopicInterface;
+use CodeBuds\SyliusFCMPlugin\Entity\ProductFCMTopic;
+use CodeBuds\SyliusFCMPlugin\Entity\ProductFCMTopicInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription;
+use CodeBuds\SyliusFCMPlugin\Repository\EntityTopicRepositoryInterface;
 use CodeBuds\SyliusFCMPlugin\Repository\TopicSubscriptionRepositoryInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Kreait\Firebase\Contract\Messaging;
+use Kreait\Firebase\Exception\FirebaseException;
+use Kreait\Firebase\Exception\MessagingException;
+use Sylius\Component\Core\Model\ProductInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class FCMTopicService
@@ -18,11 +24,13 @@ class FCMTopicService
     private TopicSubscriptionRepositoryInterface $subscriptionRepository;
     private ValidatorInterface $validator;
     private Messaging $messaging;
+    private EntityTopicRepositoryInterface $entityTopicRepository;
 
     public function __construct(
         FCMTokenService                      $tokenService,
         EntityManagerInterface               $manager,
         TopicSubscriptionRepositoryInterface $subscriptionRepository,
+        EntityTopicRepositoryInterface       $entityTopicRepository,
         ValidatorInterface                   $validator,
         Messaging                            $messaging
     )
@@ -32,6 +40,26 @@ class FCMTopicService
         $this->subscriptionRepository = $subscriptionRepository;
         $this->validator = $validator;
         $this->messaging = $messaging;
+        $this->entityTopicRepository = $entityTopicRepository;
+    }
+
+    public function generateProductTopic(ProductInterface $product): ProductFCMTopicInterface
+    {
+        return (new ProductFCMTopic())
+            ->setProduct($product)
+            ->generateTopicId();
+    }
+
+    public function getProductTopic(ProductInterface $product): ?ProductFCMTopicInterface
+    {
+        return $this->entityTopicRepository->getProductFCMTopicByProduct($product);
+    }
+
+    public function getDiscriminatorValueFromClass(string $class): string
+    {
+        $typeClass = new \ReflectionClass($class);
+        $typeShortName = $typeClass->getShortName();
+        return strtolower($typeShortName);
     }
 
     public function unsubscribe(FCMTopicInterface $topic): void
@@ -47,17 +75,51 @@ class FCMTopicService
         $this->messaging->unsubscribeFromTopic($topic->getTopicId(), $this->tokenService->getTokenValues($tokens));
     }
 
-    public function unsubscribeUserFromTopic(FCMTokenOwnerInterface $user, FCMTopicInterface $topic): void
+    public function unsubscribeUserFromTopic(FCMTokenOwnerInterface $user, FCMTopicInterface $topic, bool $deleteFromDatabase = true): void
     {
-        $tokens = $user->getCurrentUserTokens();
+        $tokens = $user->getFcmTokens();
 
-        $query = $this->manager->createQuery('DELETE FROM CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription ts WHERE ts.token IN (:tokens) AND ts.topic = :topic')
-            ->setParameter('tokens', $tokens)
-            ->setParameter('topic', $topic);
+        if($deleteFromDatabase) {
+            $query = $this->manager->createQuery('DELETE FROM CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription ts WHERE ts.token IN (:tokens) AND ts.topic = :topic')
+                ->setParameter('tokens', $tokens)
+                ->setParameter('topic', $topic);
 
-        $query->execute();
+            $query->execute();
+        }
 
         $this->messaging->unsubscribeFromTopic($topic->getTopicId(), $this->tokenService->getTokenValues($tokens));
+    }
+
+    public function unsubscribeUserFromTopicId(FCMTokenOwnerInterface $user, string $topicId): void
+    {
+        $tokens = $user->getFcmTokens();
+
+        $this->messaging->unsubscribeFromTopic($topicId, $this->tokenService->getTokenValues($tokens));
+    }
+
+    /**
+     * @param FCMTokenOwnerInterface $user
+     * @param string|null $type
+     * @return void
+     */
+    public function unsubscribeUserFromTopics(FCMTokenOwnerInterface $user, ?string $type): void
+    {
+        $tokens = $user->getFcmTokens();
+        $subscriptions = $this->subscriptionRepository->getSubscribedTopics($user, $type);
+
+        if (!($tokens || $subscriptions)) {
+            return;
+        }
+
+        $topicIds = [];
+        /** @var TopicSubscription $subscription */
+        foreach ($subscriptions as $subscription) {
+            $this->manager->remove($subscription);
+            $topicIds[] = $subscription->getTopic()->getTopicId();
+        }
+        $this->manager->flush();
+
+        $this->messaging->unsubscribeFromTopics($topicIds, $this->tokenService->getTokenValues($tokens));
     }
 
     public function newTokenSubscriptions(FCMTokenOwnerInterface $user, FCMTokenInterface $newFCMToken): void
@@ -74,11 +136,16 @@ class FCMTopicService
             $topics[] = $subscription->getTopic()->getTopicId();
         }
 
-        $this->messaging->subscribeToTopics($topics, $newFCMToken);
+        if ($topics) {
+            try {
+                $this->messaging->validateRegistrationTokens($newFCMToken);
+                $this->messaging->subscribeToTopics($topics, $newFCMToken);
+            } catch (MessagingException|FirebaseException $e) {
+
+            }
+        }
 
         $this->manager->flush();
-
-
     }
 
     public function isSubscribed(FCMTokenOwnerInterface $user, FCMTopicInterface $topic): bool
@@ -89,6 +156,30 @@ class FCMTopicService
     public function generateSubscriptions(FCMTopicInterface $topic): int
     {
         $tokens = $this->tokenService->getCurrentUserTokens();
+        $count = 0;
+        foreach ($tokens as $token) {
+            $tokenSubscription = new TopicSubscription();
+            $tokenSubscription->setTopic($topic);
+            $tokenSubscription->setToken($token);
+
+            $errors = $this->validator->validate($tokenSubscription, null, 'codebuds');
+
+            // Only persist the subscription for this topic/token  if there are no errors
+            if (count($errors) === 0) {
+                $count++;
+                $this->manager->persist($tokenSubscription);
+            }
+
+        }
+
+        $this->messaging->SubscribeToTopic($topic->getTopicId(), $this->tokenService->getTokenValues($tokens));
+
+        return $count;
+    }
+
+    public function generateSubscriptionsForUser(FCMTokenOwnerInterface $user, FCMTopicInterface $topic): int
+    {
+        $tokens = $user->getFcmTokens();
         $count = 0;
         foreach ($tokens as $token) {
             $tokenSubscription = new TopicSubscription();
@@ -121,5 +212,49 @@ class FCMTopicService
         /** @var FCMTokenInterface[] $tokens */
         $tokens = $user->getFcmTokens();
         return $this->messaging->unsubscribeFromAllTopics($this->tokenService->getTokenValues($tokens));
+    }
+
+    /**
+     * @param FCMTopicInterface $topic
+     * @param FCMTokenInterface[] $tokens $tokens
+     * @return array
+     */
+    public function unsubscribeTokensFromTopic(FCMTopicInterface $topic, array $tokens): array
+    {
+        return $this->messaging->unsubscribeFromTopic($topic->getTopicId(), $this->tokenService->getTokenValues($tokens));
+    }
+
+    /**
+     * @param TopicSubscription[] $subscriptions
+     * @return void
+     */
+    public function deleteSubscriptionsFromDatabase(array $subscriptions): void
+    {
+        foreach ($subscriptions as $subscription) {
+            $this->manager->remove($subscription);
+        }
+        $this->manager->flush();
+    }
+
+    public function deleteTopic(FCMTopicInterface $topic): void
+    {
+        /** @var TopicSubscription[] $subscriptions */
+        $subscriptions = $topic->getSubscriptions();
+        if(count($subscriptions)) {
+            $subscribedTokens = array_map(static fn($subscription) => $subscription->getToken(), $subscriptions);
+            if(count($subscribedTokens) > 2000) {
+                $subscribedTokensChunks = array_chunk($subscribedTokens, 2000);
+                foreach ($subscribedTokensChunks as $chunk) {
+                    $this->unsubscribeTokensFromTopic($topic, $chunk);
+                }
+            } else {
+                $this->unsubscribeTokensFromTopic($topic, $subscribedTokens);
+            }
+
+            $this->deleteSubscriptionsFromDatabase($subscriptions);
+        }
+
+        $this->manager->remove($topic);
+        $this->manager->flush();
     }
 }

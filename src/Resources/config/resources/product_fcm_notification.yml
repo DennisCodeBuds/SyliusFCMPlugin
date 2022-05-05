@@ -1,0 +1,8 @@
+sylius_resource:
+    resources:
+        codebuds_sylius_fcm_plugin.product_fcm_notification:
+            driver: doctrine/orm
+            classes:
+                model: CodeBuds\SyliusFCMPlugin\Entity\ProductFCMNotification
+                interface: CodeBuds\SyliusFCMPlugin\Entity\FCMNotificationInterface
+                controller: CodeBuds\SyliusFCMPlugin\Controller\ProductFCMNotificationController

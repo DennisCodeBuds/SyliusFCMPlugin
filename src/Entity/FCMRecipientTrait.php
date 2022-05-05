@@ -16,7 +16,7 @@ trait FCMRecipientTrait
         return $this->messages;
     }
 
-    public function addNotification(FCMNotification $message): self
+    public function addNotification(FCMNotificationInterface $message): self
     {
         if (!$this->messages->contains($message)) {
             $this->messages[] = $message;
@@ -26,7 +26,7 @@ trait FCMRecipientTrait
         return $this;
     }
 
-    public function removeNotification(FCMNotification $message): self
+    public function removeNotification(FCMNotificationInterface $message): self
     {
         if ($this->messages->removeElement($message)) {
             // set the owning side to null (unless already changed)

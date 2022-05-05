@@ -2,6 +2,7 @@
 
 namespace CodeBuds\SyliusFCMPlugin\Command;
 
+use CodeBuds\SyliusFCMPlugin\Entity\FCMEntityTopic;
 use CodeBuds\SyliusFCMPlugin\Service\FCMTopicService;
 use CodeBuds\SyliusFCMPlugin\Service\FirebaseMessaging;
 use Doctrine\ORM\EntityManagerInterface;
@@ -39,7 +40,9 @@ class FcmUnsubscribeUserFromTopicsCommand extends Command
         $this
             ->addOption('username', null, InputOption::VALUE_REQUIRED, 'The shopUser username')
             ->addOption('all', null, InputOption::VALUE_NONE, 'The user will be unsubscribed from all topics')
-            ->addOption('topic', null, InputOption::VALUE_OPTIONAL, 'The topic id to unsubscribe from');
+            ->addOption('topic', null, InputOption::VALUE_OPTIONAL, 'The topic id to unsubscribe from')
+            ->addOption('no-local-check', null, InputOption::VALUE_NONE, 'The topic must exist in the local database')
+        ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -56,10 +59,20 @@ class FcmUnsubscribeUserFromTopicsCommand extends Command
             return Command::SUCCESS;
         }
 
-        if ($topic = $input->getOption('topic')) {
+        if ($topicId = $input->getOption('topic')) {
+            $topicRepository = $this->manager->getRepository(FCMEntityTopic::class);
+            $topic = $topicRepository->findOneBy(['topicId' => $topicId]);
+            if (!$input->getOption('no-local-check') && !$topic) {
+                $io->error(sprintf('No topic found with the topicId of %s', $topicId));
+                return Command::FAILURE;
+            }
 
+            if($topic) {
+                $this->topicService->unsubscribeUserFromTopic($user, $topic);
+            } else {
+                $this->topicService->unsubscribeUserFromTopicId($user, $topicId);
+            }
         }
-
 
         return Command::SUCCESS;
     }

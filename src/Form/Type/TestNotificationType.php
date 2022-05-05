@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class TestNotificationType extends AbstractType
@@ -43,7 +44,10 @@ final class TestNotificationType extends AbstractType
             ])->add('data', TextareaType::class, [
                 'required' => false,
                 'mapped' => false,
-                'attr' => ['placeholder' => $jsonPlaceholder]
+                'attr' => ['placeholder' => $jsonPlaceholder],
+                'constraints' => [
+                    new Assert\Json()
+                ]
             ]);
     }
 }

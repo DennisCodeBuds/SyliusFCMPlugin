@@ -8,24 +8,26 @@ sylius_grid:
             sorting:
                 createdAt: desc
             fields:
-                owner:
+                shopUser:
                     type: twig
-                    label: sylius.ui.shop_user
+                    label: codebuds_sylius_fcm_plugin.ui.shop_user
                     options:
                         template: "@CodeBudsSyliusFCMPlugin/Grid/Field/shopUser.html.twig"
                 value:
-                    type: string
-                    label: sylius.ui.title
+                    type: twig
+                    label: sylius.ui.value
+                    options:
+                        template: "@CodeBudsSyliusFCMPlugin/Grid/Field/token.html.twig"
                 createdAt:
                     sortable: true
                     type: datetime
                     label: sylius.ui.created_at
             filters:
-                shop_user:
+                shopUser:
                     type: string
-                    label: sylius.ui.shop_user
+                    label: codebuds_sylius_fcm_plugin.ui.shop_user
                     options:
-                        fields: [ shop_user.email, shop_user.firstName, shop_user.lastName ]
+                        fields: [ shopUser.email, shopUser.customer.firstName, shopUser.customer.lastName ]
                 date:
                     type: date
                     label: sylius.ui.date

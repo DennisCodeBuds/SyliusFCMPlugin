@@ -4,9 +4,12 @@
 namespace CodeBuds\SyliusFCMPlugin\Service;
 
 
+use CodeBuds\SyliusFCMPlugin\Entity\FCMEntityTopicInterface;
+use CodeBuds\SyliusFCMPlugin\Entity\FCMNotificationInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMRecipientInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenOwnerInterface;
+use CodeBuds\SyliusFCMPlugin\Entity\ProductFCMNotification;
 use CodeBuds\SyliusFCMPlugin\Entity\ShopUserFCMNotification;
 use Doctrine\ORM\EntityManagerInterface;
 use Kreait\Firebase\Exception\FirebaseException;
@@ -77,6 +80,61 @@ class FirebaseMessaging
             }
             $this->messaging->send($message);
         }, $recipient->getFcmTokens()->toArray());
+    }
+
+    public function sendShopUserNotification(ShopUserFCMNotification $notification): void
+    {
+        $this->manager->persist($notification);
+        $this->manager->flush();
+
+        array_map(/**
+         * @throws MessagingException
+         * @throws FirebaseException
+         */ function ($token) use ($notification) {
+            $message = CloudMessage::withTarget('token', (string)$token)
+                ->withNotification(Notification::create($notification->getTitle(), $notification->getBody()));
+
+            if ($data = $notification->getData()) {
+                $message->withData($data);
+            }
+            $this->messaging->send($message);
+        }, $notification->getShopUser()->getFcmTokens()->toArray());
+    }
+
+    /**
+     * @throws MessagingException
+     * @throws FirebaseException
+     * @throws \JsonException
+     */
+    public function sendProductNotification(ProductFCMNotification $notification): void
+    {
+        $this->manager->persist($notification);
+        $this->manager->flush();
+        $message = CloudMessage::withTarget('topic', $notification->getTopic()->getTopicId())
+            ->withNotification(Notification::create($notification->getTitle(), $notification->getBody()));
+
+        if ($data = $notification->getData()) {
+            $message->withData(json_decode($data, true, 512, JSON_THROW_ON_ERROR));
+        }
+        $this->messaging->send($message);
+    }
+
+    /**
+     * @throws MessagingException
+     * @throws FirebaseException
+     * @throws \JsonException
+     */
+    public function sendEntityTopicNotification(FCMNotificationInterface $notification): void
+    {
+        $this->manager->persist($notification);
+        $this->manager->flush();
+        $message = CloudMessage::withTarget('topic', $notification->getTopic()->getTopicId())
+            ->withNotification(Notification::create($notification->getTitle(), $notification->getBody()));
+
+        if ($data = $notification->getData()) {
+            $message->withData(json_decode($data, true, 512, JSON_THROW_ON_ERROR));
+        }
+        $this->messaging->send($message);
     }
 
     /**

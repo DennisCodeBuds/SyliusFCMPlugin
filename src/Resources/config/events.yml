@@ -33,3 +33,10 @@ services:
         tags:
             - { name: kernel.event_listener, event: lexik_jwt_authentication.on_authentication_success, method: onAuthenticationSuccessResponse }
     
+    codebuds_sylius_fcm_plugin.event_listener.product:
+        class:  CodeBuds\SyliusFCMPlugin\EventListener\ProductListener
+        tags:
+            - { name: kernel.event_listener, event: 'sylius.product.post_create', method: postCreate}
+            - { name: kernel.event_listener, event: 'sylius.product.post_delete', method: postDelete }
+        arguments:
+          [ '@codebuds_sylius_fcm_plugin.service.fcm_topic', '@doctrine.orm.entity_manager' ]

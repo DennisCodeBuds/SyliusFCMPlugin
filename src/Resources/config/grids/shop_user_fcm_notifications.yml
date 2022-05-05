@@ -8,9 +8,9 @@ sylius_grid:
             sorting:
                 createdAt: desc
             fields:
-                recipient:
+                shopUser:
                     type: twig
-                    label: sylius.ui.shop_user
+                    label: codebuds_sylius_fcm_plugin.ui.shop_user
                     options:
                         template: "@CodeBudsSyliusFCMPlugin/Grid/Field/shopUser.html.twig"
                 title:
@@ -24,11 +24,11 @@ sylius_grid:
                     type: datetime
                     label: sylius.ui.created_at
             filters:
-                shop_user:
+                shopUser:
                     type: string
-                    label: sylius.ui.shop_user
+                    label: codebuds_sylius_fcm_plugin.ui.shop_user
                     options:
-                        fields: [ shop_user.email, shop_user.firstName, shop_user.lastName ]
+                        fields: [ shopUser.email, shopUser.customer.firstName, shopUser.customer.lastName ]
                 date:
                     type: date
                     label: sylius.ui.date

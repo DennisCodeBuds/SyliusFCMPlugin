@@ -1,0 +1,23 @@
+{% form_theme form '@SyliusUi/Form/theme.html.twig' %}
+
+<div class="codebuds-product-fcm-notification ui form" data-cb-fcm-wrapper data-cb-target="product-fcm-notification">
+    {{ form_start(form) }}
+
+    {{ form_row(form.topic) }}
+
+    {{ form_row(form.title) }}
+    <div class="two fields">
+        {{ form_row(form.body) }}
+        {{ form_row(form.data) }}
+    </div>
+    <button class="ui teal left labeled icon button" type="button"
+            id="notificationSubmit"
+    >
+        <i class="envelope icon"></i>
+        {{ 'codebuds_sylius_fcm_plugin.ui.test_notification.button'|trans }}
+    </button>
+    <br>
+    {{ form_errors(form) }}
+    {{ form_widget(form._token) }}
+    {{ form_end(form) }}
+</div>

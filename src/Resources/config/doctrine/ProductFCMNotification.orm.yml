@@ -1,0 +1,14 @@
+CodeBuds\SyliusFCMPlugin\Entity\ProductFCMNotification:
+    type: entity
+    table: codebuds_fcm_shop_user_notification
+
+    manyToOne:
+        topic:
+            targetEntity: CodeBuds\SyliusFCMPlugin\Entity\ProductFCMTopicInterface
+            fetch: EAGER
+            joinTable:
+                name: topic
+                joinColumns:
+                    product_topic_id:
+                        referencedColumnName: id
+                        onDelete: CASCADE #TODO check this

@@ -1,5 +1,6 @@
 export class TestNotification {
   init() {
+    console.log('niosdnf');
     this._handleForm();
   }
 

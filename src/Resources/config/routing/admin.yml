@@ -1,9 +1,18 @@
 codebuds_sylius_fcm_plugin_admin_shop_user_notifications:
     resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/shop_user_fcm_notifications.yml"
 
+codebuds_sylius_fcm_plugin_admin_product_notifications:
+    resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/product_fcm_notifications.yml"
+
 codebuds_sylius_fcm_plugin_admin_shop_user_tokens:
     resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/shop_user_fcm_tokens.yml"
 
 
 codebuds_sylius_fcm_plugin_admin_configuration:
     resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/fcm_configuration.yml"
+
+codebuds_sylius_fcm_plugin_admin_product_topics:
+    resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/product_fcm_topics.yml"
+
+codebuds_sylius_fcm_plugin_admin_notifications:
+    resource: "@CodeBudsSyliusFCMPlugin/Resources/config/routing/fcm_notifications.yml"

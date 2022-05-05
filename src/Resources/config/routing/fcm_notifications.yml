@@ -1,0 +1,32 @@
+codebuds_sylius_fcm_plugin_admin_fcm_notification_create:
+    path: /fcm-notifications/new
+    methods: [ GET, POST, PUT ]
+    defaults:
+        _controller: codebuds_sylius_fcm_plugin.controller.fcm_notification.overridden::createAction
+        _sylius:
+            template: "@CodeBudsSyliusFCMPlugin/FCMNotifications/create.html.twig"
+            section: admin
+            permission: true
+
+codebuds_sylius_fcm_plugin_admin_fcm_notification_submit:
+    path: /fcm-notifications/submit
+    methods: [ POST ]
+    defaults:
+        _controller: codebuds_sylius_fcm_plugin.controller.fcm_notification.overridden::submitAction
+
+
+codebuds_sylius_fcm_plugin_admin_fcm_notifications:
+    resource: |
+        alias: codebuds_sylius_fcm_plugin.fcm_notification
+        section: admin
+        templates: "@SyliusAdmin\\Crud"
+        redirect: update
+        permission: true
+        grid: codebuds_sylius_fcm_plugin_admin_notifications
+        except: ['create', 'delete']
+        vars:
+            all:
+                subheader: codebuds_sylius_fcm_plugin.ui.notification
+    type: sylius.resource
+
+

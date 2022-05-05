@@ -1,12 +1,12 @@
 CodeBuds\SyliusFCMPlugin\Entity\ShopUserFCMNotification:
-    type: mappedSuperclass
+    type: entity
     table: codebuds_fcm_shop_user_notification
 
     manyToOne:
         shopUser:
             targetEntity: Sylius\Component\Core\Model\ShopUserInterface
             joinTable:
-                name: codebuds_fcm_token_shop_user
+                name: codebuds_fcm_shop_users
                 joinColumns:
                     codebuds_fcm_entity_shop_user_id:
                         referencedColumnName: id

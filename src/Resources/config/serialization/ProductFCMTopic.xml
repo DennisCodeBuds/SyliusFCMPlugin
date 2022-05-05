@@ -15,5 +15,8 @@
         <attribute name="subscribed">
             <group>shop:topic-subscription:toggle</group>
         </attribute>
+        <attribute name="toggleRoute">
+            <group>shop:topic-subscription:toggle</group>
+        </attribute>
     </class>
 </serializer>

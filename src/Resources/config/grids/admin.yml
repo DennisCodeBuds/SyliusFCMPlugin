@@ -2,3 +2,6 @@ imports:
     - { resource: "@CodeBudsSyliusFCMPlugin/Resources/config/grids/shop_user_fcm_notifications.yml" }
     - { resource: "@CodeBudsSyliusFCMPlugin/Resources/config/grids/shop_user_fcm_tokens.yml" }
     - { resource: "@CodeBudsSyliusFCMPlugin/Resources/config/grids/fcm_configuration.yml" }
+    - { resource: "@CodeBudsSyliusFCMPlugin/Resources/config/grids/fcm_notifications.yml" }
+    - { resource: "@CodeBudsSyliusFCMPlugin/Resources/config/grids/product_fcm_topics.yml" }
+    - { resource: "@CodeBudsSyliusFCMPlugin/Resources/config/grids/product_fcm_notifications.yml" }

@@ -7,7 +7,7 @@ use CodeBuds\SyliusFCMPlugin\Entity\FCMTopicInterface;
 
 interface TopicSubscriptionRepositoryInterface
 {
-    public function getSubscribedTopics(FCMTokenOwnerInterface $user);
+    public function getSubscribedTopics(FCMTokenOwnerInterface $user, ?string $type);
 
     public function getSubscribedTopic(FCMTokenOwnerInterface $user, FCMTopicInterface $topic);
 }

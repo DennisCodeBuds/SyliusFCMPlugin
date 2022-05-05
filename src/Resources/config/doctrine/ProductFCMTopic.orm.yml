@@ -1,13 +1,15 @@
 CodeBuds\SyliusFCMPlugin\Entity\ProductFCMTopic:
     type: entity
     table: codebuds_fcm_product_fcm_topic
-    manyToOne:
+    
+    oneToOne:
         product:
             targetEntity: Sylius\Component\Product\Model\ProductInterface
+            inversedBy: topic
             joinTable:
                 name: codebuds_fcm_topic_products
                 joinColumns:
-                    codebuds_fcm_entity_topic_id:
+                    entity_topic_id:
                         referencedColumnName: id
                         onDelete: CASCADE #TODO check this
                 inverseJoinColumns:

@@ -1,0 +1,51 @@
+sylius_grid:
+    templates:
+        action:
+            notify: "@CodeBudsSyliusFCMPlugin/Grid/Action/notify.html.twig"
+    grids:
+        codebuds_sylius_fcm_plugin_admin_notifications:
+            driver:
+                name: doctrine/orm
+                options:
+                    class: "%codebuds_sylius_fcm_plugin.model.fcm_notification.class%"
+            sorting:
+                createdAt: desc
+            fields:
+                recipient:
+                    type: twig
+                    label: sylius.ui.shop_user
+                    options:
+                        template: "@CodeBudsSyliusFCMPlugin/Grid/Field/shopUser.html.twig"
+                title:
+                    type: string
+                    label: sylius.ui.title
+                body:
+                    type: string
+                    label: sylius.ui.body
+                createdAt:
+                    sortable: true
+                    type: datetime
+                    label: sylius.ui.created_at
+            filters:
+                shop_user:
+                    type: string
+                    label: sylius.ui.shop_user
+                    options:
+                        fields: [ shop_user.email, shop_user.firstName, shop_user.lastName ]
+                date:
+                    type: date
+                    label: sylius.ui.date
+                    options:
+                        field: createdAt
+                        inclusive_to: true
+            actions:
+                main:
+                    create:
+                        type: create
+                item:
+                    delete:
+                        type: delete
+                bulk:
+                    delete:
+                        type: delete
+                
