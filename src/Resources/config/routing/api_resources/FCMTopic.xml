@@ -78,6 +78,18 @@
                     <attribute name="id">\d+</attribute>
                 </attribute>
             </itemOperation>
+            <itemOperation name="get">
+                <attribute name="path">/admin/topics/{id}</attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">admin:topic:read</attribute>
+                </attribute>
+                <attribute name="denormalization_context">
+                    <attribute name="groups">none</attribute>
+                </attribute>
+                <attribute name="requirements">
+                    <attribute name="id">\d+</attribute>
+                </attribute>
+            </itemOperation>
         </itemOperations>
 
         <property name="id" identifier="true" writable="false"/>

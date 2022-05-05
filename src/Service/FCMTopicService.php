@@ -79,7 +79,7 @@ class FCMTopicService
     {
         $tokens = $user->getFcmTokens();
 
-        if($deleteFromDatabase) {
+        if ($deleteFromDatabase) {
             $query = $this->manager->createQuery('DELETE FROM CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription ts WHERE ts.token IN (:tokens) AND ts.topic = :topic')
                 ->setParameter('tokens', $tokens)
                 ->setParameter('topic', $topic);
@@ -169,7 +169,6 @@ class FCMTopicService
                 $count++;
                 $this->manager->persist($tokenSubscription);
             }
-
         }
 
         $this->messaging->SubscribeToTopic($topic->getTopicId(), $this->tokenService->getTokenValues($tokens));
@@ -193,12 +192,18 @@ class FCMTopicService
                 $count++;
                 $this->manager->persist($tokenSubscription);
             }
-
         }
 
         $this->messaging->SubscribeToTopic($topic->getTopicId(), $this->tokenService->getTokenValues($tokens));
 
         return $count;
+    }
+
+    public function generateSubscriptionsForUserToTopicId(FCMTokenOwnerInterface $user, string $topicId): void
+    {
+        $tokens = $user->getFcmTokens();
+
+        $this->messaging->SubscribeToTopic($topicId, $this->tokenService->getTokenValues($tokens));
     }
 
     public function unsubscribeCurrentUserFromAllTopics(): array
@@ -240,9 +245,9 @@ class FCMTopicService
     {
         /** @var TopicSubscription[] $subscriptions */
         $subscriptions = $topic->getSubscriptions();
-        if(count($subscriptions)) {
+        if (count($subscriptions)) {
             $subscribedTokens = array_map(static fn($subscription) => $subscription->getToken(), $subscriptions);
-            if(count($subscribedTokens) > 2000) {
+            if (count($subscribedTokens) > 2000) {
                 $subscribedTokensChunks = array_chunk($subscribedTokens, 2000);
                 foreach ($subscribedTokensChunks as $chunk) {
                     $this->unsubscribeTokensFromTopic($topic, $chunk);

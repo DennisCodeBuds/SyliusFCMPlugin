@@ -21,20 +21,6 @@ final class NotificationsMenuBuilder
             ->setLabel('codebuds_sylius_fcm_plugin.ui.configuration')
             ->setLabelAttribute('icon', 'cogs');
 
-        $FCMRootMenuItem
-            ->addChild('codebuds_sylius_fcm_shop_user_notifications', ['route' => 'codebuds_sylius_fcm_plugin_admin_shop_user_fcm_notification_index'])
-            ->setLabel('codebuds_sylius_fcm_plugin.ui.shop_user_fcm_notifications')
-            ->setLabelAttribute('icon', 'envelope');
-
-        $FCMRootMenuItem
-            ->addChild('codebuds_sylius_fcm_product_notifications', ['route' => 'codebuds_sylius_fcm_plugin_admin_product_fcm_notification_index'])
-            ->setLabel('codebuds_sylius_fcm_plugin.ui.product_fcm_notifications')
-            ->setLabelAttribute('icon', 'envelope');
-
-//        $FCMRootMenuItem
-//            ->addChild('codebuds_sylius_fcm_notifications', ['route' => 'codebuds_sylius_fcm_plugin_admin_fcm_notification_index'])
-//            ->setLabel('codebuds_sylius_fcm_plugin.ui.fcm_notifications')
-//            ->setLabelAttribute('icon', 'envelope');
 
         $FCMRootMenuItem
             ->addChild('codebuds_sylius_fcm_shop_user_tokens', ['route' => 'codebuds_sylius_fcm_plugin_admin_shop_user_fcm_token_index'])
@@ -42,8 +28,18 @@ final class NotificationsMenuBuilder
             ->setLabelAttribute('icon', 'key');
 
         $FCMRootMenuItem
+            ->addChild('codebuds_sylius_fcm_shop_user_notifications', ['route' => 'codebuds_sylius_fcm_plugin_admin_shop_user_fcm_notification_index'])
+            ->setLabel('codebuds_sylius_fcm_plugin.ui.shop_user_fcm_notifications')
+            ->setLabelAttribute('icon', 'envelope');
+
+        $FCMRootMenuItem
             ->addChild('codebuds_sylius_fcm_product_fcm_topics', ['route' => 'codebuds_sylius_fcm_plugin_admin_product_fcm_topic_index'])
             ->setLabel('codebuds_sylius_fcm_plugin.ui.product_fcm_topics')
-            ->setLabelAttribute('icon', 'key');
+            ->setLabelAttribute('icon', 'lightbulb outline');
+
+        $FCMRootMenuItem
+            ->addChild('codebuds_sylius_fcm_product_notifications', ['route' => 'codebuds_sylius_fcm_plugin_admin_product_fcm_notification_index'])
+            ->setLabel('codebuds_sylius_fcm_plugin.ui.product_fcm_notifications')
+            ->setLabelAttribute('icon', 'envelope');
     }
 }

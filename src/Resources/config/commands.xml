@@ -28,9 +28,21 @@
             <argument type="service" id="doctrine.orm.entity_manager"/>
             <argument type="service" id="codebuds_sylius_fcm_plugin.service.messaging"/>
             <argument type="service" id="codebuds_sylius_fcm_plugin.service.fcm_topic"/>
-            <tag name="console.command" command="fcm:topic-subscriptions:unsubscribe" alias="fcm:topic-subscriptions:unsubscribe"/>
+            <tag name="console.command" command="fcm:topic-subscriptions:unsubscribe"
+                 alias="fcm:topic-subscriptions:unsubscribe"/>
         </service>
         <service id="CodeBuds\SyliusFCMPlugin\Command\FcmUnsubscribeUserFromTopicsCommand"
-                 alias="codebuds_sylius_fcm_plugin.command.get_user_topic_subscriptions" public="true"/>
+                 alias="codebuds_sylius_fcm_plugin.command.unsubscribe_user_from_topics" public="true"/>
+
+        <service id="codebuds_sylius_fcm_plugin.command.subscribe_user_to_topic"
+                 class="CodeBuds\SyliusFCMPlugin\Command\FcmSubscribeUserToTopicCommand" public="true">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="codebuds_sylius_fcm_plugin.service.messaging"/>
+            <argument type="service" id="codebuds_sylius_fcm_plugin.service.fcm_topic"/>
+            <tag name="console.command" command="fcm:topic-subscriptions:subscribe"
+                 alias="fcm:topic-subscriptions:subscribe"/>
+        </service>
+        <service id="CodeBuds\SyliusFCMPlugin\Command\FcmSubscribeUserToTopicCommand"
+                 alias="codebuds_sylius_fcm_plugin.command.subscribe_user_to_topic" public="true"/>
     </services>
 </container>
