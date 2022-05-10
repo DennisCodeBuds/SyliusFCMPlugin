@@ -10,6 +10,7 @@ use CodeBuds\SyliusFCMPlugin\Entity\ProductFCMTopicInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription;
 use CodeBuds\SyliusFCMPlugin\Repository\EntityTopicRepositoryInterface;
 use CodeBuds\SyliusFCMPlugin\Repository\TopicSubscriptionRepositoryInterface;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Exception\FirebaseException;
@@ -65,6 +66,9 @@ class FCMTopicService
     public function unsubscribe(FCMTopicInterface $topic): void
     {
         $tokens = $this->tokenService->getCurrentUserTokens();
+        if ($tokens->isEmpty()) {
+            return;
+        }
 
         $query = $this->manager->createQuery('DELETE FROM CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription ts WHERE ts.token IN (:tokens) AND ts.topic = :topic')
             ->setParameter('tokens', $tokens)
@@ -78,6 +82,9 @@ class FCMTopicService
     public function unsubscribeUserFromTopic(FCMTokenOwnerInterface $user, FCMTopicInterface $topic, bool $deleteFromDatabase = true): void
     {
         $tokens = $user->getFcmTokens();
+        if ($tokens->isEmpty()) {
+            return;
+        }
 
         if ($deleteFromDatabase) {
             $query = $this->manager->createQuery('DELETE FROM CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription ts WHERE ts.token IN (:tokens) AND ts.topic = :topic')
@@ -93,6 +100,9 @@ class FCMTopicService
     public function unsubscribeUserFromTopicId(FCMTokenOwnerInterface $user, string $topicId): void
     {
         $tokens = $user->getFcmTokens();
+        if ($tokens->isEmpty()) {
+            return;
+        }
 
         $this->messaging->unsubscribeFromTopic($topicId, $this->tokenService->getTokenValues($tokens));
     }
@@ -105,9 +115,14 @@ class FCMTopicService
     public function unsubscribeUserFromTopics(FCMTokenOwnerInterface $user, ?string $type): void
     {
         $tokens = $user->getFcmTokens();
+
+        if ($tokens->isEmpty()) {
+            return;
+        }
+
         $subscriptions = $this->subscriptionRepository->getSubscribedTopics($user, $type);
 
-        if (!($tokens || $subscriptions)) {
+        if (!$subscriptions) {
             return;
         }
 
@@ -156,6 +171,9 @@ class FCMTopicService
     public function generateSubscriptions(FCMTopicInterface $topic): int
     {
         $tokens = $this->tokenService->getCurrentUserTokens();
+        if ($tokens->isEmpty()) {
+            return 0;
+        }
         $count = 0;
         foreach ($tokens as $token) {
             $tokenSubscription = new TopicSubscription();
@@ -169,6 +187,7 @@ class FCMTopicService
                 $count++;
                 $this->manager->persist($tokenSubscription);
             }
+
         }
 
         $this->messaging->SubscribeToTopic($topic->getTopicId(), $this->tokenService->getTokenValues($tokens));
@@ -179,6 +198,9 @@ class FCMTopicService
     public function generateSubscriptionsForUser(FCMTokenOwnerInterface $user, FCMTopicInterface $topic): int
     {
         $tokens = $user->getFcmTokens();
+        if ($tokens->isEmpty()) {
+            return 0;
+        }
         $count = 0;
         foreach ($tokens as $token) {
             $tokenSubscription = new TopicSubscription();
@@ -192,6 +214,7 @@ class FCMTopicService
                 $count++;
                 $this->manager->persist($tokenSubscription);
             }
+
         }
 
         $this->messaging->SubscribeToTopic($topic->getTopicId(), $this->tokenService->getTokenValues($tokens));
@@ -199,23 +222,22 @@ class FCMTopicService
         return $count;
     }
 
-    public function generateSubscriptionsForUserToTopicId(FCMTokenOwnerInterface $user, string $topicId): void
-    {
-        $tokens = $user->getFcmTokens();
-
-        $this->messaging->SubscribeToTopic($topicId, $this->tokenService->getTokenValues($tokens));
-    }
-
     public function unsubscribeCurrentUserFromAllTopics(): array
     {
         $tokens = $this->tokenService->getCurrentUserTokens();
+        if ($tokens->isEmpty()) {
+            return [];
+        }
         return $this->messaging->unsubscribeFromAllTopics($this->tokenService->getTokenValues($tokens));
     }
 
     public function unsubscribeUserFromAllTopics(FCMTokenOwnerInterface $user): array
     {
-        /** @var FCMTokenInterface[] $tokens */
+        /** @var FCMTokenInterface[]|Collection $tokens */
         $tokens = $user->getFcmTokens();
+        if ($tokens->isEmpty()) {
+            return [];
+        }
         return $this->messaging->unsubscribeFromAllTopics($this->tokenService->getTokenValues($tokens));
     }
 
