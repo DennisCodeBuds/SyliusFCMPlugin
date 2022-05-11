@@ -19,7 +19,7 @@ final class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-            ->scalarNode("firebase_credentials_filepath")->defaultValue('%kernel.project_dir%/var/config/firebase_credentials.yaml')->end()
+            ->scalarNode("firebase_credentials_filepath")->defaultValue('%kernel.project_dir%/var/config/firebase_credentials.json')->end()
             ->end();
 
 
