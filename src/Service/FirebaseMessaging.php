@@ -47,7 +47,7 @@ class FirebaseMessaging
             ->withNotification(Notification::create($title, $body));
 
         if ($data) {
-            $message->withData($data);
+            $message = $message->withData($data);
         }
 
         return $this->messaging->send($message, $validateOnly);
@@ -76,7 +76,7 @@ class FirebaseMessaging
                 ->withNotification(Notification::create($title, $body));
 
             if ($data) {
-                $message->withData($data);
+                $message = $message->withData($data);
             }
             $this->messaging->send($message);
         }, $recipient->getFcmTokens()->toArray());
@@ -95,7 +95,7 @@ class FirebaseMessaging
                 ->withNotification(Notification::create($notification->getTitle(), $notification->getBody()));
 
             if ($data = $notification->getData()) {
-                $message->withData($data);
+                $message = $message->withData($data);
             }
             $this->messaging->send($message);
         }, $notification->getShopUser()->getFcmTokens()->toArray());
@@ -114,7 +114,7 @@ class FirebaseMessaging
             ->withNotification(Notification::create($notification->getTitle(), $notification->getBody()));
 
         if ($data = $notification->getData()) {
-            $message->withData(json_decode($data, true, 512, JSON_THROW_ON_ERROR));
+            $message = $message->withData(json_decode($data, true, 512, JSON_THROW_ON_ERROR));
         }
         $this->messaging->send($message);
     }
@@ -132,7 +132,7 @@ class FirebaseMessaging
             ->withNotification(Notification::create($notification->getTitle(), $notification->getBody()));
 
         if ($data = $notification->getData()) {
-            $message->withData(json_decode($data, true, 512, JSON_THROW_ON_ERROR));
+            $message = $message->withData(json_decode($data, true, 512, JSON_THROW_ON_ERROR));
         }
         $this->messaging->send($message);
     }
@@ -147,7 +147,7 @@ class FirebaseMessaging
             ->withNotification(Notification::create($title, $body));
 
         if ($data) {
-            $message->withData($data);
+            $message = $message->withData($data);
         }
         $this->messaging->send($message);
     }
