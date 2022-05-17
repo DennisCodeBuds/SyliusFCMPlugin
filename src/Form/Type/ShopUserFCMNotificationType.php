@@ -38,13 +38,19 @@ class ShopUserFCMNotificationType extends FCMNotificationType
                 'required' => true,
                 'mapped' => true,
                 'constraints' => [
-                    new Assert\NotBlank()
+                    new Assert\NotBlank(),
+                    new Assert\Length([
+                        'max' => 100
+                    ])
                 ]
             ])->add('body', TextareaType::class, [
                 'required' => true,
                 'mapped' => true,
                 'constraints' => [
-                    new Assert\NotBlank()
+                    new Assert\NotBlank(),
+                    new Assert\Length([
+                        'max' => 250
+                    ])
                 ]
             ])->add('data', TextareaType::class, [
                 'required' => false,

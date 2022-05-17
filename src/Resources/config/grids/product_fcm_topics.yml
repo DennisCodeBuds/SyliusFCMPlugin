@@ -22,7 +22,7 @@ sylius_grid:
                     type: string
                     label: sylius.ui.product
                     options:
-                        fields: [ product.name ]
+                        fields: [ product.translations.name ]
                 date:
                     type: date
                     label: sylius.ui.date

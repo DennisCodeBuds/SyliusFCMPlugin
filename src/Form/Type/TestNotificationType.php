@@ -34,13 +34,25 @@ final class TestNotificationType extends AbstractType
             ])
             ->add('target', TextType::class, [
                 'required' => true,
-                'mapped' => false,
-            ])->add('title', TextType::class, [
+                'mapped' => false])
+            ->add('title', TextType::class, [
                 'required' => true,
                 'mapped' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length([
+                        'max' => 100
+                    ])
+                ]
             ])->add('body', TextareaType::class, [
                 'required' => true,
                 'mapped' => false,
+                'constraints' => [
+                    new Assert\NotBlank(),
+                    new Assert\Length([
+                        'max' => 250
+                    ])
+                ]
             ])->add('data', TextareaType::class, [
                 'required' => false,
                 'mapped' => false,
