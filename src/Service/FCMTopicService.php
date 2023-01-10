@@ -2,6 +2,7 @@
 
 namespace CodeBuds\SyliusFCMPlugin\Service;
 
+use App\Entity\FCM\ProductSaleFCMTopic;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenOwnerInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTopicInterface;
@@ -266,9 +267,9 @@ class FCMTopicService
     public function deleteTopic(FCMTopicInterface $topic): void
     {
         /** @var TopicSubscription[] $subscriptions */
-        $subscriptions = $topic->getSubscriptions();
+        $subscriptions = $topic->getSubscriptions()->toArray();
         if (count($subscriptions)) {
-            $subscribedTokens = array_map(static fn($subscription) => $subscription->getToken(), $subscriptions);
+            $subscribedTokens = array_map(static fn($subscription) => dd($subscription), $subscriptions);
             if (count($subscribedTokens) > 2000) {
                 $subscribedTokensChunks = array_chunk($subscribedTokens, 2000);
                 foreach ($subscribedTokensChunks as $chunk) {
@@ -277,9 +278,16 @@ class FCMTopicService
             } else {
                 $this->unsubscribeTokensFromTopic($topic, $subscribedTokens);
             }
-
             $this->deleteSubscriptionsFromDatabase($subscriptions);
         }
+
+        //Delete all notifications related to the topic
+        $query = $this->manager->createQuery('DELETE FROM CodeBuds\SyliusFCMPlugin\Entity\ProductFCMNotification notification WHERE notification.topic = :topic')
+            ->setParameter('topic', $topic);
+
+        $query->execute();
+
+        dd('kek');
 
         $this->manager->remove($topic);
         $this->manager->flush();
