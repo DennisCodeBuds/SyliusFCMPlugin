@@ -5,6 +5,7 @@ namespace CodeBuds\SyliusFCMPlugin\Service;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenOwnerInterface;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Security\Core\Security;
 
 class FCMTokenService
@@ -52,6 +53,9 @@ class FCMTokenService
      */
     public function getTokenValues($tokens): array
     {
+        if($tokens instanceof PersistentCollection) {
+            $tokens = $tokens->toArray();
+        }
         return array_map(static fn(FCMTokenInterface $token) => $token->getValue(), $tokens);
     }
 }
