@@ -32,6 +32,14 @@
         <service id="CodeBuds\SyliusFCMPlugin\Command\FcmDeleteTopicCommand"
                  alias="codebuds_sylius_fcm_plugin.command.delete_topic" public="true"/>
 
+        <service id="codebuds_sylius_fcm_plugin.command.add_user_token"
+                 class="CodeBuds\SyliusFCMPlugin\Command\FcmAddUserToken" public="true">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <tag name="console.command" command="fcm:token:add" alias="token:add"/>
+        </service>
+        <service id="CodeBuds\SyliusFCMPlugin\Command\FcmAddUserToken"
+                 alias="codebuds_sylius_fcm_plugin.command.add_user_token" public="true"/>
+
         <service id="codebuds_sylius_fcm_plugin.command.unsubscribe_user_from_topics"
                  class="CodeBuds\SyliusFCMPlugin\Command\FcmUnsubscribeUserFromTopicsCommand" public="true">
             <argument type="service" id="doctrine.orm.entity_manager"/>

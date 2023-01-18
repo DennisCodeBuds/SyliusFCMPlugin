@@ -13,6 +13,7 @@
                 <attribute name="path">/admin/ShopUserFCMTokens</attribute>
                 <attribute name="normalization_context">
                     <attribute name="groups">admin:topic:read</attribute>
+                    <attribute name="groups">admin:topic-subscription:read</attribute>
                 </attribute>
             </collectionOperation>
         </collectionOperations>
@@ -23,13 +24,18 @@
                 <attribute name="denormalization_context">
                     <attribute name="groups">admin:topic-subscription:read</attribute>
                     <attribute name="groups">admin:topic:read</attribute>
+                    <attribute name="groups">admin:topic-subscription:read</attribute>
+                </attribute>
+                <attribute name="normalization_context">
+                    <attribute name="groups">admin:token:read</attribute>
+                    <attribute name="groups">admin:topic-subscription:read</attribute>
+                    <attribute name="groups">admin:topic:read</attribute>
                 </attribute>
             </itemOperation>
         </itemOperations>
 
         <property name="id" identifier="true" writable="false"/>
-        <property name="topic" writable="true"/>
         <property name="token" writable="false"/>
-        <property name="product" writable="true"/>
+        <property name="owner" writable="false"/>
     </resource>
 </resources>

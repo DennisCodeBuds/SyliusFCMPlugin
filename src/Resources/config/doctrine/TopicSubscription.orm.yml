@@ -24,6 +24,8 @@ CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription:
                     onDelete: CASCADE #TODO check this
         
         token:
+            fetch: EAGER
+            inversedBy: subscriptions
             targetEntity: CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface
             joinColumns:
                 token_id:

@@ -2,7 +2,6 @@
 
 namespace CodeBuds\SyliusFCMPlugin\Service;
 
-use App\Entity\FCM\ProductSaleFCMTopic;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenOwnerInterface;
 use CodeBuds\SyliusFCMPlugin\Entity\FCMTopicInterface;
@@ -268,8 +267,9 @@ class FCMTopicService
     {
         /** @var TopicSubscription[] $subscriptions */
         $subscriptions = $topic->getSubscriptions()->toArray();
+
         if (count($subscriptions)) {
-            $subscribedTokens = array_map(static fn($subscription) => dd($subscription), $subscriptions);
+            $subscribedTokens = array_map(static fn($subscription) => $subscription->getToken(), $subscriptions);
             if (count($subscribedTokens) > 2000) {
                 $subscribedTokensChunks = array_chunk($subscribedTokens, 2000);
                 foreach ($subscribedTokensChunks as $chunk) {
@@ -286,8 +286,6 @@ class FCMTopicService
             ->setParameter('topic', $topic);
 
         $query->execute();
-
-        dd('kek');
 
         $this->manager->remove($topic);
         $this->manager->flush();

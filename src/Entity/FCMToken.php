@@ -15,6 +15,8 @@ abstract class FCMToken implements ResourceInterface, FCMTokenInterface
 
     protected $value;
 
+    protected $subscriptions;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -42,6 +44,14 @@ abstract class FCMToken implements ResourceInterface, FCMTokenInterface
         $this->value = $value;
 
         return $this;
+    }
+
+    /**
+     * @return TopicSubscriptionInterface[]|null
+     */
+    public function getSubscriptions()
+    {
+        return $this->subscriptions;
     }
 
     public function __toString(): string

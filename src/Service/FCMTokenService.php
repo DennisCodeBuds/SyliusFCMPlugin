@@ -40,11 +40,18 @@ class FCMTokenService
         return $this->getTokenValues($user->getFcmTokens());
     }
 
+    public function getDiscriminatorValueFromClass(string $class): string
+    {
+        $typeClass = new \ReflectionClass($class);
+        $typeShortName = $typeClass->getShortName();
+        return strtolower($typeShortName);
+    }
+
     /**
      * @param FCMTokenInterface[] $tokens
      */
     public function getTokenValues($tokens): array
     {
-        return array_map(static fn(FCMTokenInterface $token) => $token->getValue(), $tokens->toArray());
+        return array_map(static fn(FCMTokenInterface $token) => $token->getValue(), $tokens);
     }
 }

@@ -16,6 +16,7 @@
         <attribute name="token">
             <group>admin:topic-subscription:read</group>
             <group>admin:topic:read</group>
+            <group>admin:token:read</group>
             <group>shop:topic-subscription:read</group>
             <group>shop:topic-subscription:create</group>
         </attribute>

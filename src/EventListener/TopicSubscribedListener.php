@@ -2,14 +2,9 @@
 
 namespace CodeBuds\SyliusFCMPlugin\EventListener;
 
-use CodeBuds\SyliusFCMPlugin\Entity\FCMTokenInterface;
-use CodeBuds\SyliusFCMPlugin\Entity\FCMTopicInterface;
-use CodeBuds\SyliusFCMPlugin\Entity\TopicSubscription;
 use CodeBuds\SyliusFCMPlugin\Event\TopicSubscribedEvent;
 use CodeBuds\SyliusFCMPlugin\Service\FCMTokenService;
 use CodeBuds\SyliusFCMPlugin\Service\FCMTopicService;
-use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TopicSubscribedListener
 {
@@ -17,8 +12,8 @@ class TopicSubscribedListener
     private FCMTopicService $topicService;
 
     public function __construct(
-        FCMTokenService        $tokenService,
-        FCMTopicService        $topicService
+        FCMTokenService $tokenService,
+        FCMTopicService $topicService
     )
     {
         $this->tokenService = $tokenService;
