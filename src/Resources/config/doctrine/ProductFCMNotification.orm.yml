@@ -4,11 +4,16 @@ CodeBuds\SyliusFCMPlugin\Entity\ProductFCMNotification:
 
     manyToOne:
         topic:
+            cascade: ["remove"]
             targetEntity: CodeBuds\SyliusFCMPlugin\Entity\ProductFCMTopicInterface
             fetch: EAGER
             joinTable:
                 name: topic
                 joinColumns:
                     product_topic_id:
+                        referencedColumnName: id
+                        onDelete: CASCADE #TODO check this
+                inverseJoinColumns:
+                    product_id:
                         referencedColumnName: id
                         onDelete: CASCADE #TODO check this

@@ -40,9 +40,8 @@ final class TopicInputDataTransformer implements DataTransformerInterface
                 throw new NotFoundHttpException('No topic found for the product');
             }
 
-            $subscription = (new TopicSubscription())
+            return (new TopicSubscription())
                 ->setTopic($topic);
-            return $subscription;
         }
     }
 

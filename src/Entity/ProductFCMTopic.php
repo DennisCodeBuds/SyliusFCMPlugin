@@ -30,6 +30,4 @@ class ProductFCMTopic extends FCMEntityTopic implements ProductFCMTopicInterface
         $this->product = $product;
         return $this;
     }
-
-
 }

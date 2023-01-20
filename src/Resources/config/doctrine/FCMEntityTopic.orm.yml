@@ -39,4 +39,4 @@ CodeBuds\SyliusFCMPlugin\Entity\FCMEntityTopic:
         subscriptions:
             targetEntity: CodeBuds\SyliusFCMPlugin\Entity\TopicSubscriptionInterface
             mappedBy: topic
-            fetch: EXTRA_LAZY
+            fetch: EAGER

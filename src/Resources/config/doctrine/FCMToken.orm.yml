@@ -33,3 +33,8 @@ CodeBuds\SyliusFCMPlugin\Entity\FCMToken:
             gedmo:
                 timestampable:
                     on: update
+    oneToMany:
+        subscriptions:
+            targetEntity: CodeBuds\SyliusFCMPlugin\Entity\TopicSubscriptionInterface
+            mappedBy: token
+            fetch: EAGER
