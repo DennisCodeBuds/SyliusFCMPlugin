@@ -5,11 +5,11 @@
 >
     <class name="CodeBuds\SyliusFCMPlugin\Entity\FCMToken">
         <attribute name="value">
-            <group>admin:topic:read</group>
+            <group>admin:topic-subscription:read</group>
             <group>admin:token:read</group>
         </attribute>
         <attribute name="owner">
-            <group>admin:topic:read</group>
+            <group>admin:topic-subscription:read</group>
             <group>admin:token:read</group>
         </attribute>
     </class>

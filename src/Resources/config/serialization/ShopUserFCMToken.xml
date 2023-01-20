@@ -6,14 +6,17 @@
     <class name="CodeBuds\SyliusFCMPlugin\Entity\ShopUserFCMToken">
         <attribute name="value">
             <group>admin:topic:read</group>
+            <group>admin:topic-subscription:read</group>
             <group>admin:token:read</group>
         </attribute>
         <attribute name="owner">
             <group>admin:topic:read</group>
+            <group>admin:topic-subscription:read</group>
             <group>admin:token:read</group>
         </attribute>
         <attribute name="shopUser">
             <group>admin:topic:read</group>
+            <group>admin:topic-subscription:read</group>
             <group>admin:token:read</group>
         </attribute>
     </class>
